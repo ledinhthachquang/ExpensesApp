@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { AntDesign, Feather, FontAwesome5 } from "@expo/vector-icons";
 import CustomListItem from "../components/CustomListItem";
 
+import { Entypo } from '@expo/vector-icons';
 
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -22,7 +23,9 @@ const HomeScreen = ({ navigation }) => {
       headerRight: () => (
         <View style={{ marginRight: 20 }}>
           <TouchableOpacity activeOpacity={0.5} onPress={signOutUser}>
-            <Text style={{ fontWeight: "bold" }}>Logout</Text>
+          <Text style={{ padding: 10 }}>
+          <Entypo name="log-out" size={25} color="white" />
+              </Text>
           </TouchableOpacity>
         </View>
       ),
