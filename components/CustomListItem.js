@@ -22,11 +22,13 @@ const CustomListItem = ({info, navigation, id}) => {
           )}
           <ListItem.Content>
             <ListItem.Title
-              style={{fontWeight: 'bold', textTransform: 'capitalize'}}
+              style={{fontWeight: 'bold', textTransform: 'capitalize', fontSize: 18}}
             >
               {info?.text}
             </ListItem.Title>
-            <ListItem.Subtitle>
+            <ListItem.Subtitle
+             style={{ fontSize: 16}}
+            >
               {/* {new Date(info?.timestamp?.toDate()).toUTCString()} */}
               {info?.userDate}
             </ListItem.Subtitle>
@@ -34,11 +36,11 @@ const CustomListItem = ({info, navigation, id}) => {
           <View>
             {info.type === 'expense' ? (
               <Text style={styles.right}>
-                $ -{Number(info?.price)?.toFixed(2)}
+                $ -{Number(info?.price)}
               </Text>
             ) : (
               <Text style={styles.rightIncome}>
-                $ {Number(info?.price)?.toFixed(2)}
+                $ {Number(info?.price)}
               </Text>
             )}
           </View>
@@ -72,9 +74,11 @@ const styles = StyleSheet.create({
   right: {
     fontWeight: 'bold',
     color: 'red',
+    fontSize: 16
   },
   rightIncome: {
     fontWeight: 'bold',
     color: 'green',
+    fontSize: 16
   },
 })
