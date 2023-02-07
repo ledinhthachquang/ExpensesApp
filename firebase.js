@@ -23,3 +23,4 @@ const auth = firebase.auth()
 const db = app.firestore()
 
 export {auth, db}
+  
