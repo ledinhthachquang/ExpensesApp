@@ -1,6 +1,6 @@
 import {StatusBar} from 'expo-status-bar'
 import React, {useLayoutEffect, useState} from 'react'
-import {StyleSheet, View, KeyboardAvoidingView} from 'react-native'
+import {TextInput,StyleSheet, View, KeyboardAvoidingView, Pressable } from 'react-native'
 import {Input, Button, Text, Image} from 'react-native-elements'
 import {auth} from '../firebase'
 
@@ -60,43 +60,80 @@ const RegisterScreen = ({navigation}) => {
         Create an account
       </Text>
       <View style={styles.inputContainer}>
-        <Input
+        {/* <Input
           placeholder='Full Name'
           type='text'
           autoFocus
           value={fullName}
           onChangeText={(text) => setFullName(text)}
+        /> */}
+        <TextInput
+          style={styles.box}
+          placeholder='Full Name'
+          name='text'
+          autoFocus
+          value={fullName}
+          onChangeText={(text) => setFullName(text)}
         />
-        <Input
+        <TextInput
+          style={styles.box}
+          placeholder='Email'
+          name='text'
+          autoFocus
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+        {/* <Input
           placeholder='Email'
           type='text'
           
           value={email}
           onChangeText={(text) => setEmail(text)}
+        /> */}
+         <TextInput
+          style={styles.box}
+          placeholder='Password'
+          name='text'
+          autoFocus
+          secureTextEntry
+          value={password}
+          onChangeText={(text) => setPassword(text)}
         />
-        <Input
+        {/* <Input
           placeholder='Password'
           type='text'
           
           value={password}
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
+        /> */}
+         <TextInput
+          style={styles.box}
+          placeholder='Profile Picture Url (Optional)'
+          name='text'
+          autoFocus
+          value={imageUrl}
+          onChangeText={(text) => setImageUrl(text)}
+          onSubmitEditing={signUp}
         />
-        <Input
+        {/* <Input
           placeholder='Profile Picture Url (Optional)'
           type='text'
          
           value={imageUrl}
           onChangeText={(text) => setImageUrl(text)}
           onSubmitEditing={signUp}
-        />
+        /> */}
       </View>
-      <Button
+      {/* <Button
         containerStyle={styles.button}
         title='Register'
         onPress={signUp}
         loading={submitLoading}
-      />
+      /> */}
+      <Pressable style={styles.buttonRegister} onPress={signUp} loading={submitLoading}>
+            <Text style={styles.text} >Register</Text>
+          </Pressable>
     </KeyboardAvoidingView>
   )
 }
@@ -117,5 +154,31 @@ const styles = StyleSheet.create({
   button: {
     width: 300,
     marginTop: 10,
+    backgroundColor:'white'
+  },
+  buttonRegister: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#00A68B",
+    width: 300,
+  },
+  box: {
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 8,
+    marginBottom: 8,
+    borderRadius: 10,
+    padding: 10,
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
   },
 })
