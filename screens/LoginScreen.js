@@ -4,11 +4,12 @@ import {
   StyleSheet,
   View,
   KeyboardAvoidingView
-  , Pressable 
+  , Pressable
 } from "react-native";
-import { Input, Button, Image, Text} from "react-native-elements";
+import { Input, Button, Image, Text } from "react-native-elements";
 import { StatusBar } from "expo-status-bar";
 import { auth } from "../firebase";
+import firebase from "firebase";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -57,6 +58,15 @@ const LoginScreen = ({ navigation }) => {
       });
     }
   }, [navigation, loading]);
+
+  const ForgotPassword = () => {
+    firebase.auth().sendPasswordResetEmail(email)
+      .then(() => {
+        alert('Password reset email sent')
+      }).catch((error) => {
+        alert(error)
+      })
+  }
 
   return (
     <>
@@ -113,9 +123,20 @@ const LoginScreen = ({ navigation }) => {
           <Pressable style={styles.buttonLogin} onPress={signIn}>
             <Text style={styles.text} >Login</Text>
           </Pressable>
-          <Pressable style={styles.button} onPress={() => navigation.navigate("Register")}>
-            <Text style={styles.textRegister} >Register</Text>
-          </Pressable>
+          <Button
+            title='Forgot Password?'
+            onPress={() => {ForgotPassword()} }
+            titleStyle={{ color: '#00a86b' }}
+            type='clear'
+            style={styles.button}
+          />
+          <Button
+            title="Don't have an account yet? Sign up"
+            onPress={() => navigation.navigate("Register")}
+            titleStyle={{ color: 'gray' }}
+            type='clear'
+            style={styles.button}
+          />
           {/* <Button
             onPress={() => navigation.navigate("Register")}
             containerStyle={styles.button}
