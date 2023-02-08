@@ -65,9 +65,9 @@ const LoginScreen = ({ navigation }) => {
           <StatusBar style="light" />
           <Image
             source={{
-              uri: "https://static-s.aa-cdn.net/img/gp/20600011886807/to-aGJ31KLwqc9AWaBUyL6NLbpFwN9VEliX7nQ_AU48aO4jH6M1MltWKmThWJPndJg=s300?v=1",
+              uri: "https://res.cloudinary.com/dc5xcbmvp/image/upload/v1675657593/upload/logo_ifv5gc.png?fbclid=IwAR03Q7fp1hFXBZylM5txwliy4mY0l54ibrN9LlBWGZzjJ6drW04KT7ZeKjU",
             }}
-            style={{ width: 100, height: 100, marginBottom: 50 }}
+            style={{ width: 200, height: 200, marginBottom: 30 }}
           />
           <View style={styles.inputContainer}>
             {/* <Input

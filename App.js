@@ -11,7 +11,12 @@ import RegisterScreen from './screens/RegisterScreen'
 import AddScreen from './screens/AddScreen'
 import UpdateScreen from './screens/UpdateScreen'
 import AllTransactions from './screens/AllTransactions'
+
+import Profile from './screens/Profile'
+
+
 import TransactionDetail from './screens/TransactionDetail'
+
 
 const Stack = createStackNavigator()
 
@@ -54,6 +59,8 @@ export default function App() {
         <Stack.Screen name='Add' component={AddScreen} />
         <Stack.Screen name='Update' component={UpdateScreen} />
         <Stack.Screen name='All' component={AllTransactions} />
+        <Stack.Screen name='Profile' component={Profile} />
+
       </Stack.Navigator>
     </NavigationContainer>
   )

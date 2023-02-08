@@ -289,6 +289,7 @@ const HomeScreen = ({ navigation }) => {
         >
           <AntDesign name="home" size={24} color="#66AFBB" />
         </TouchableOpacity>
+        
         <TouchableOpacity
           style={styles.plusButton}
           onPress={() => navigation.navigate("Add")}
@@ -301,6 +302,12 @@ const HomeScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("All")}
         >
           <FontAwesome5 name="list-alt" size={24} color="#EF8A76" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate("Profile")}
+        >
+          <AntDesign name="home" size={24} color="#66AFBB" />
         </TouchableOpacity>
       </View>
     </>
