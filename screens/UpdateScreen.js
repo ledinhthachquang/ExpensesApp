@@ -102,7 +102,7 @@ const UpdateScreen = ({route, navigation}) => {
           style={styles.input}
           placeholder='Add Text'
           value={input}
-          // defaultValue={transactions.text}
+          defaultValue={transactions.text}
           onChangeText={(text) => setInput(text)}
         />
 

@@ -221,6 +221,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#00A68B",
     width: 300,
     marginTop: 8,
+    marginTop:10,
+
   },
   box: {
     borderColor: "gray",

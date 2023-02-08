@@ -4,6 +4,7 @@ import { Text, Avatar, ListItem } from "react-native-elements";
 import { auth, db } from "../firebase";
 import { StatusBar } from "expo-status-bar";
 import { AntDesign, Feather, FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from '@expo/vector-icons';
 import CustomListItem from "../components/CustomListItem";
 
 import { Entypo } from '@expo/vector-icons';
@@ -307,7 +308,7 @@ const HomeScreen = ({ navigation }) => {
           activeOpacity={0.5}
           onPress={() => navigation.navigate("Profile")}
         >
-          <AntDesign name="home" size={24} color="#66AFBB" />
+          <Ionicons name="ios-person-circle-outline" size={30} color="#00A86B" />
         </TouchableOpacity>
       </View>
     </>
@@ -318,7 +319,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: "#FFF6E5",
     flex: 1,
     // alignItems: "flex-start",
     // justifyContent: "flex-start",
