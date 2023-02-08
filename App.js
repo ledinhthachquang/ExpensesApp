@@ -11,11 +11,17 @@ import RegisterScreen from './screens/RegisterScreen'
 import AddScreen from './screens/AddScreen'
 import UpdateScreen from './screens/UpdateScreen'
 import AllTransactions from './screens/AllTransactions'
+
+import Profile from './screens/Profile'
+import EditProfile from './screens/EditProfile'
+
+
 import TransactionDetail from './screens/TransactionDetail'
 
+
+
+
 const Stack = createStackNavigator()
-
-
 export default function App() {
   const globalScreenOptions = {
     headerStyle: {
@@ -43,6 +49,32 @@ export default function App() {
   //     </View>
   //   );
   // }
+  const ProfileStack = ({navigation}) => (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{
+          headerTitle: 'Edit Profile',
+          headerShown:false,
+          headerBackTitleVisible: false,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
   return (
     <NavigationContainer>
       <StatusBar style='dark' />
@@ -54,6 +86,9 @@ export default function App() {
         <Stack.Screen name='Add' component={AddScreen} />
         <Stack.Screen name='Update' component={UpdateScreen} />
         <Stack.Screen name='All' component={AllTransactions} />
+        <Stack.Screen name='Profile' component={ProfileStack} />
+        <Stack.Screen name='EditProfile' component={EditProfile} />
+
       </Stack.Navigator>
     </NavigationContainer>
   )

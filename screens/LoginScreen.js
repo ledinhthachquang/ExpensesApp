@@ -4,11 +4,12 @@ import {
   StyleSheet,
   View,
   KeyboardAvoidingView
-  , Pressable 
+  , Pressable
 } from "react-native";
-import { Input, Button, Image, Text} from "react-native-elements";
+import { Input, Button, Image, Text } from "react-native-elements";
 import { StatusBar } from "expo-status-bar";
 import { auth } from "../firebase";
+import firebase from "firebase";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -58,6 +59,15 @@ const LoginScreen = ({ navigation }) => {
     }
   }, [navigation, loading]);
 
+  const ForgotPassword = () => {
+    firebase.auth().sendPasswordResetEmail(email)
+      .then(() => {
+        alert('Password reset email sent')
+      }).catch((error) => {
+        alert(error)
+      })
+  }
+
   return (
     <>
       {!loading ? (
@@ -65,9 +75,9 @@ const LoginScreen = ({ navigation }) => {
           <StatusBar style="light" />
           <Image
             source={{
-              uri: "https://static-s.aa-cdn.net/img/gp/20600011886807/to-aGJ31KLwqc9AWaBUyL6NLbpFwN9VEliX7nQ_AU48aO4jH6M1MltWKmThWJPndJg=s300?v=1",
+              uri: "https://res.cloudinary.com/dc5xcbmvp/image/upload/v1675657593/upload/logo_ifv5gc.png?fbclid=IwAR03Q7fp1hFXBZylM5txwliy4mY0l54ibrN9LlBWGZzjJ6drW04KT7ZeKjU",
             }}
-            style={{ width: 100, height: 100, marginBottom: 50 }}
+            style={{ width: 200, height: 200, marginBottom: 30 }}
           />
           <View style={styles.inputContainer}>
             {/* <Input
@@ -113,9 +123,20 @@ const LoginScreen = ({ navigation }) => {
           <Pressable style={styles.buttonLogin} onPress={signIn}>
             <Text style={styles.text} >Login</Text>
           </Pressable>
-          <Pressable style={styles.button} onPress={() => navigation.navigate("Register")}>
-            <Text style={styles.textRegister} >Register</Text>
-          </Pressable>
+          <Button
+            title='Forgot Password?'
+            onPress={() => {ForgotPassword()} }
+            titleStyle={{ color: '#00a86b' }}
+            type='clear'
+            style={styles.button}
+          />
+          <Button
+            title="Don't have an account yet? Sign up"
+            onPress={() => navigation.navigate("Register")}
+            titleStyle={{ color: 'gray' }}
+            type='clear'
+            style={styles.button}
+          />
           {/* <Button
             onPress={() => navigation.navigate("Register")}
             containerStyle={styles.button}
