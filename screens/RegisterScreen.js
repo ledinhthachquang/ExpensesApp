@@ -1,12 +1,12 @@
-import {StatusBar} from 'expo-status-bar'
-import React, {useLayoutEffect, useState} from 'react'
-import {TextInput,StyleSheet, View, KeyboardAvoidingView, Pressable } from 'react-native'
-import {Input, Button, Text, Image} from 'react-native-elements'
+import { StatusBar } from 'expo-status-bar'
+import React, { useLayoutEffect, useState } from 'react'
+import { TextInput, StyleSheet, View, KeyboardAvoidingView, Pressable } from 'react-native'
+import { Input, Button, Text, Image } from 'react-native-elements'
 import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
-import {auth,db} from '../firebase'
+import { auth, db } from '../firebase'
 
-const RegisterScreen = ({navigation}) => {
+const RegisterScreen = ({ navigation }) => {
   const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -15,7 +15,7 @@ const RegisterScreen = ({navigation}) => {
 
   const [image, setImage] = useState(null);
 
-  
+
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -25,21 +25,21 @@ const RegisterScreen = ({navigation}) => {
       aspect: [4, 3],
       quality: 1,
     });
-    
+
     // setImageUrl(result.assets[0].uri)
     console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
-      
+
       setImageUrl(result.assets[0].uri)
-      
-     
+
+
     }
-    
+
   }
 
-  
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -50,17 +50,17 @@ const RegisterScreen = ({navigation}) => {
   const signUp = () => {
     if (fullName && email && password && imageUrl) {
       setSubmitLoading(true)
-      
+
       auth
         .createUserWithEmailAndPassword(email, password)
-       
+
         .then((authUser) => {
           db.collection('users')
-      .add({
-        email: email,
-        photoURL: imageUrl ,
-        displayName :fullName,
-      })
+            .add({
+              email: email,
+              photoURL: imageUrl,
+              displayName: fullName,
+            })
           clearInputFields() &
             authUser.user.updateProfile({
               displayName: fullName,
@@ -69,8 +69,8 @@ const RegisterScreen = ({navigation}) => {
                 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVe0cFaZ9e5Hm9X-tdWRLSvoZqg2bjemBABA&usqp=CAU',
             })
         })
-       
-       
+
+
         .catch((err) => alert(err.message) & setSubmitLoading(false))
     } else {
       alert('All fields are mandatory')
@@ -94,9 +94,9 @@ const RegisterScreen = ({navigation}) => {
           uri:
             'https://res.cloudinary.com/dc5xcbmvp/image/upload/v1675657593/upload/logo_ifv5gc.png?fbclid=IwAR03Q7fp1hFXBZylM5txwliy4mY0l54ibrN9LlBWGZzjJ6drW04KT7ZeKjU',
         }}
-        style={{width: 200, height: 200, marginBottom: 20}}
+        style={{ width: 200, height: 200, marginBottom: 20 }}
       />
-      <Text h4 style={{marginBottom: 50}}>
+      <Text h4 style={{ marginBottom: 50 }}>
         Create an account
       </Text>
       <View style={styles.inputContainer}>
@@ -130,7 +130,7 @@ const RegisterScreen = ({navigation}) => {
           value={email}
           onChangeText={(text) => setEmail(text)}
         /> */}
-         <TextInput
+        <TextInput
           style={styles.box}
           placeholder='Password'
           name='text'
@@ -147,7 +147,7 @@ const RegisterScreen = ({navigation}) => {
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
         /> */}
-         {/* <TextInput
+        {/* <TextInput
           style={styles.box}
           placeholder='Profile Picture Url (Optional)'
           name='text'
@@ -157,12 +157,12 @@ const RegisterScreen = ({navigation}) => {
           onSubmitEditing={signUp}
         /> */}
         <Pressable style={styles.buttonRegister} onPress={pickImage} >
-            <Text style={styles.text} >Choose image for profile </Text>
-            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-          </Pressable>
-       
-        
-      
+          <Text style={styles.text} >Choose image for profile </Text>
+          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+        </Pressable>
+
+
+
         {/* <Input
           placeholder='Profile Picture Url (Optional)'
           type='text'
@@ -179,8 +179,16 @@ const RegisterScreen = ({navigation}) => {
         loading={submitLoading}
       /> */}
       <Pressable style={styles.buttonRegister} onPress={signUp} loading={submitLoading}>
-            <Text style={styles.text} >Register</Text>
-          </Pressable>
+        <Text style={styles.text} >Sign up</Text>
+      </Pressable>
+      <Text style={{marginTop: 8, fontSize: 12, letterSpacing: 0.25, color: 'gray', fontWeight: 'bold'}}>Or with</Text>
+      <Button
+        title="Already have an account? Login"
+        onPress={() => navigation.navigate("Login")}
+        titleStyle={{ color: 'gray' }}
+        type='clear'
+        style={styles.button}
+      />
     </KeyboardAvoidingView>
   )
 }
@@ -201,7 +209,7 @@ const styles = StyleSheet.create({
   button: {
     width: 300,
     marginTop: 10,
-    backgroundColor:'white'
+    backgroundColor: 'white'
   },
   buttonRegister: {
     alignItems: "center",
@@ -212,6 +220,7 @@ const styles = StyleSheet.create({
     elevation: 3,
     backgroundColor: "#00A68B",
     width: 300,
+    marginTop: 8,
   },
   box: {
     borderColor: "gray",
