@@ -5,6 +5,33 @@ import { Input, Button, Text, Image } from 'react-native-elements'
 import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
 import { auth, db } from '../firebase'
+// import { GoogleSignin } from '@react-native-community/google-signin';
+// import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+
+// import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+async function onGoogleButtonPress() {
+  // Check if your device supports Google Play
+  await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+  // Get the users ID token
+  const { idToken } = await GoogleSignin.signIn();
+
+  // Create a Google credential with the token
+  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+  // Sign-in the user with the credential
+  return auth().signInWithCredential(googleCredential);
+}
+
+function GoogleSignIn() {
+  return (
+    <Button
+      title="Google Sign-In"
+      onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
+    />
+  );
+}
 
 const RegisterScreen = ({ navigation }) => {
   const [fullName, setFullName] = useState('')
@@ -14,6 +41,10 @@ const RegisterScreen = ({ navigation }) => {
   const [submitLoading, setSubmitLoading] = useState(false)
 
   const [image, setImage] = useState(null);
+
+  // GoogleSignin.configure({
+  //   webClientId: '',
+  // });
 
 
 
@@ -89,13 +120,8 @@ const RegisterScreen = ({ navigation }) => {
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <StatusBar style='light' />
-      <Image
-        source={{
-          uri:
-            'https://res.cloudinary.com/dc5xcbmvp/image/upload/v1675657593/upload/logo_ifv5gc.png?fbclid=IwAR03Q7fp1hFXBZylM5txwliy4mY0l54ibrN9LlBWGZzjJ6drW04KT7ZeKjU',
-        }}
-        style={{ width: 200, height: 200, marginBottom: 20 }}
-      />
+      
+       <Image source={require('./../assets/logo.png')} style={{width: 200, height: 200, marginBottom: 20}} />
       <Text h4 style={{ marginBottom: 50 }}>
         Create an account
       </Text>
@@ -163,25 +189,18 @@ const RegisterScreen = ({ navigation }) => {
 
 
 
-        {/* <Input
-          placeholder='Profile Picture Url (Optional)'
-          type='text'
-         
-          value={imageUrl}
-          onChangeText={(text) => setImageUrl(text)}
-          onSubmitEditing={signUp}
-        /> */}
       </View>
-      {/* <Button
-        containerStyle={styles.button}
-        title='Register'
-        onPress={signUp}
-        loading={submitLoading}
-      /> */}
+     
       <Pressable style={styles.buttonRegister} onPress={signUp} loading={submitLoading}>
         <Text style={styles.text} >Sign up</Text>
       </Pressable>
       <Text style={{marginTop: 8, fontSize: 12, letterSpacing: 0.25, color: 'gray', fontWeight: 'bold'}}>Or with</Text>
+      <Pressable style={styles.buttonRegister} onPress={signUp} loading={submitLoading}>
+        <Text style={styles.text} >
+          Sign up with Google
+          </Text>
+      </Pressable>
+      {/* {GoogleSignIn} */}
       <Button
         title="Already have an account? Login"
         onPress={() => navigation.navigate("Login")}
