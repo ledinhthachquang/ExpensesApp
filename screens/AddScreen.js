@@ -1,26 +1,42 @@
-import {StatusBar} from 'expo-status-bar'
-import React, {useLayoutEffect, useState} from 'react'
-import {StyleSheet, View, KeyboardAvoidingView,TouchableOpacity, TextInput,Image} from 'react-native'
-import {Text, Button} from 'react-native-elements'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import format from 'date-fns/format'
-import {Picker} from '@react-native-picker/picker'
-import {db, auth} from '../firebase'
-import firebase from 'firebase'
+import { StatusBar } from "expo-status-bar";
+import React, { useLayoutEffect, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  TextInput,
+  Image,
+  ScrollView,
+} from "react-native";
+import { Text, Button } from "react-native-elements";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { AntDesign, Feather, FontAwesome5 } from "@expo/vector-icons";
+import format from "date-fns/format";
+import { Picker } from "@react-native-picker/picker";
+import { db, auth } from "../firebase";
+import firebase from "firebase";
 
-const AddScreen = ({navigation}) => {
-  const [submitLoading, setSubmitLoading] = useState(false)
+const AddScreen = ({ navigation }) => {
+  const [submitLoading, setSubmitLoading] = useState(false);
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: 'Add Expense',
-    })
-  }, [navigation])
-  const [input, setInput] = useState('')
-  const [amount, setAmount] = useState('')
+      title: "Add Transaction",
+    });
+  }, [navigation]);
+  const [input, setInput] = useState("");
+  const [amount, setAmount] = useState("");
   const createExpense = () => {
-    if (input && amount && selDate && selectedLanguage && auth && selectedCategory) {
-      setSubmitLoading(true)
-      db.collection('expense')
+    if (
+      input &&
+      amount &&
+      selDate &&
+      selectedLanguage &&
+      auth &&
+      selectedCategory
+    ) {
+      setSubmitLoading(true);
+      db.collection("expense")
         .add({
           email: auth.currentUser.email,
           text: input,
@@ -29,108 +45,113 @@ const AddScreen = ({navigation}) => {
           type: selectedLanguage,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
           userDate: result,
-          category:selectedCategory,
-
+          category: selectedCategory,
         })
         .then(() => clearInputFields())
-        .catch((error) => alert(error.message))
+        .catch((error) => alert(error.message));
     } else {
-      alert('All fields are mandatory')
-      setSubmitLoading(false)
+      alert("All fields are mandatory");
+      setSubmitLoading(false);
     }
-  }
+  };
 
   const clearInputFields = () => {
-    alert('Created Successfully')
-    setInput('')
-    setAmount('')
-    setSelDate(new Date())
-    setSelectedLanguage('expense')
-    setSelectedCategory('expense')
-    navigation.navigate('Home')
-    setSubmitLoading(false)
-  }
+    alert("Created Successfully");
+    setInput("");
+    setAmount("");
+    setSelDate(new Date());
+    setSelectedLanguage("expense");
+    setSelectedCategory("expense");
+    navigation.navigate("Home");
+    setSubmitLoading(false);
+  };
   // Date Picker
-  const [selDate, setSelDate] = useState(new Date())
-  const [show, setShow] = useState(false)
-  const [mode, setMode] = useState('date')
+  const [selDate, setSelDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const [mode, setMode] = useState("date");
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date
-    setShow(Platform.OS === 'ios')
-    setSelDate(currentDate)
-  }
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setSelDate(currentDate);
+  };
   const showMode = (currentMode) => {
-    setShow(true)
-    setMode(currentMode)
-  }
+    setShow(true);
+    setMode(currentMode);
+  };
   const showDatepicker = () => {
-    showMode('date')
-  }
-  const result = format(selDate, 'dd/MM/yyyy')
+    showMode("date");
+  };
+  const result = format(selDate, "dd/MM/yyyy");
 
   // Select Dropdown
-  const [selectedLanguage, setSelectedLanguage] = useState('expense')
-  const [selectedCategory, setSelectedCategory] = useState('expense')
-  
+  const [selectedLanguage, setSelectedLanguage] = useState("expense");
+  const [selectedCategory, setSelectedCategory] = useState("expense");
+
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <StatusBar style='dark' />
-      <View style={styles.inputContainer}>
+      <StatusBar style="dark" />
+      <ScrollView>
+        <View style={styles.inputContainer}>
+          <View style={styles.amountContainer}>
+            {/* <TouchableOpacity>
+              <Image
+                source={require("./../assets/icon.png")}
+                style={styles.icon1}
+              />
+            </TouchableOpacity> */}
+            <TextInput
+              style={[styles.textInput, styles.shadow]}
+              textAlign={"center"}
+              keyboardType="numeric"
+              placeholder="Add Amount"
+              value={amount}
+              onChangeText={(text) => setAmount(text)}
+              placeholderTextColor="#ccc"
+            />
+            <FontAwesome5 name="coins" size={25} style={{ marginLeft: 10 }} />
+          </View>
+          <View style={styles.line} />
+          <View style={[styles.selectContainer, styles.shadow]}>
+            <View style={styles.items}>
+              <Text style={styles.title}>Description</Text>
+              <View style={{ marginLeft: 30 }}>
+                <TextInput
+                  style={[styles.input1, {}]}
+                  placeholder="Add Description..."
+                  value={input}
+                  onChangeText={(text) => setInput(text)}
+                  placeholderTextColor="#ccc"
+                />
+              </View>
+            </View>
+            <View style={styles.line} />
+            <View style={styles.items}>
+              <Text style={styles.title}>Pick Your Date</Text>
+              <View>
+                {show && (
+                  <DateTimePicker
+                    testID="dateTimePicker"
+                    value={selDate}
+                    mode={mode}
+                    is24Hour={true}
+                    display="default"
+                    onChange={onChange}
+                  />
+                )}
+                <Text
+                  style={styles.input1}
+                  placeholder="Select Date"
+                  value={result}
+                  onPress={showDatepicker}
+                  // editable={false}
+                >
+                  {result ? result : new Date()}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.line} />
 
-      <View style={styles.amountContainer}>
-      
-      <TouchableOpacity>
-        <Image source={require('./../assets/bi_currency-rupee.png')} style={styles.icon1} />
-      </TouchableOpacity>
-      <TextInput
-           style={[styles.textInput,styles.shadow]}
-          keyboardType='numeric'
-          placeholder='Add Amount'
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
-          placeholderTextColor="#ccc"
-        />
-      </View>
-      <View style={[styles.selectContainer,styles.shadow]}>
-      <Text style={styles.title}>Add Description</Text>
-        <View style={styles.border}>
-        <TextInput
-          style={styles.input1}
-          placeholder='Add Discription'
-          value={input}
-          onChangeText={(text) => setInput(text)}
-          placeholderTextColor="#ccc"
-        />
-        </View>
-      
-        <Text style={styles.title}>Pick Your Date</Text>
-      <View style={styles.border}>
-        {show && (
-        
-        <DateTimePicker
-          testID='dateTimePicker'
-          value={selDate}
-          mode={mode}
-          is24Hour={true}
-          display='default'
-          onChange={onChange}
-        />
-      
-        )}
-
-       
-
-        <Text
-          style={styles.input1}
-          placeholder='Select Date'
-          value={result}
-          onPress={showDatepicker}
-          // editable={false}
-        >
-          {result ? result : new Date()}
-        </Text>
-        </View>
-        {/* <View style={styles.border}>
+            {/* <View style={styles.border}>
         <Picker
           selectedValue={selectedLanguage}
           onValueChange={(itemValue, itemIndex) =>
@@ -141,218 +162,192 @@ const AddScreen = ({navigation}) => {
           <Picker.Item label='Income' value='income' />
         </Picker>
         </View> */}
-        
-        <View style={[styles.transactionTypeContainer]}>
-          
-          <TouchableOpacity
-              style={selectedLanguage === 'expense' ? styles.selectedExpense : styles.expenseButton}
-              onPress={() => setSelectedLanguage('expense')}>
-              <Text style={styles.buttonText}>Expense</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-              style={selectedLanguage === 'income' ? styles.selectedIncome : styles.incomeButton}
-              onPress={() => setSelectedLanguage('income')}>
-              <Text style={styles.buttonText}>Income</Text>
-          </TouchableOpacity>
-          </View>
-          {/* <View style={styles.selectRow}>
+
+            <View style={[styles.transactionTypeContainer]}>
+              <TouchableOpacity
+                style={
+                  selectedLanguage === "expense"
+                    ? styles.selectedExpense
+                    : styles.expenseButton
+                }
+                onPress={() => setSelectedLanguage("expense")}
+              >
+                <Text style={styles.buttonText}>Expense</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={
+                  selectedLanguage === "income"
+                    ? styles.selectedIncome
+                    : styles.incomeButton
+                }
+                onPress={() => setSelectedLanguage("income")}
+              >
+                <Text style={styles.buttonText}>Income</Text>
+              </TouchableOpacity>
+            </View>
+            {/* <View style={styles.selectRow}>
           <Text style={styles.title}>Category</Text>
           
           </View> */}
-          <Text style={styles.title}>Category</Text>
-          <View style={styles.border}>
-        
-        <Picker
-          selectedValue={selectedCategory}
-          onValueChange={(itemCategory,itemIdx) =>
-          setSelectedCategory(itemCategory)}
-        >
-          <Picker.Item label='Education' value='education' />
-          <Picker.Item label='Nutrition' value='nutrition' />
-          <Picker.Item label='Clothing' value='clothing' />
-          <Picker.Item label='Food' value='food' />
-          <Picker.Item label='Other' value='other' />
-        </Picker>
-        </View>
-       
-        {/* <Button
+            <View style={styles.line} />
+            <View style={{ marginTop: 10, marginLeft: 10 }}>
+              <Text style={styles.title}>Category</Text>
+              <View>
+                <Picker
+                  selectedValue={selectedCategory}
+                  onValueChange={(itemCategory, itemIdx) =>
+                    setSelectedCategory(itemCategory)
+                  }
+                >
+                  <Picker.Item label="🎓 Education" value="education" />
+                  <Picker.Item label="🎮 Entertaiment" value="nutrition" />
+                  <Picker.Item label="👗 Clothes" value="clothing" />
+                  <Picker.Item label="🍜 Food" value="food" />
+                  <Picker.Item label="📦 Other" value="other" />
+                </Picker>
+              </View>
+            </View>
+            {/* <Button
           containerStyle={[styles.button,styles.submitButton]}
           title='Add'
           color="#1E6738"
           onPress={createExpense}
           loading={submitLoading}
         /> */}
-      </View>
-      <View style ={styles.buttonContainer}>
-      <TouchableOpacity
-            style={[styles.button,styles.submitButton]}
-            onPress={createExpense}
-            loading={submitLoading}
+          </View>
+          <View style={styles.line} />
+        </View>
+      </ScrollView>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.submitButton]}
+          onPress={createExpense}
+          loading={submitLoading}
+        >
+          <Text
+            style={[styles.buttonText, { fontWeight: "bold", fontSize: 17 }]}
           >
-            <Text style={styles.buttonText}>Add</Text>
-          </TouchableOpacity>
-      </View>
-     
+            Add
+          </Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
-  )
-}
+  );
+};
 
-export default AddScreen
+export default AddScreen;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF6E5',
     flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    padding: 10,
-  },
-  amountContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent:'center',
-    // justifyContent: 'flex-start',
-    width:330,
-    padding: 10,
+    padding: 20,
   },
   inputContainer: {
-    width: '100%',
-    display:'flex',
-    flexDirection:'column'
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
-  
-  input: {
-    height: 80,
-    borderColor: 'gray',
+  amountContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  textInput: {
+    fontSize: 30,
+  },
+  title: {
+    fontWeight: "bold",
+    opacity: 0.5,
+  },
+  line: {
+    borderBottomColor: "black",
     borderBottomWidth: 1,
-    marginBottom: 20,
-  },
-  input1:{
-    height: 33,
-    borderColor: 'gray',
-    // borderBottomWidth: 1,
-    marginBottom: 20,
-  },
-  button: {
-    width: 280,
-    marginTop: 17,
-    backgroundColor: 'pink',
+    opacity: 0.05,
   },
   selectContainer: {
-    flexDirection: 'column',
-    // alignItems: 'center',
-    justifyContent:'center',
-    // justifyContent: 'flex-start',
-    width:330,
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-    backgroundColor: '#FDFCFC',
-    // borderTopStartRadius: 50,
-    // borderTopEndRadius:50,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  items: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 10,
-    width: '100%',
-    
-    marginTop:38
+  },
+  input1: {
+    textAlign: "right",
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 15,
   },
   transactionTypeContainer: {
-    margin:15,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    margin: 15,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
     padding: 10,
-    backgroundColor:'transparent',
-    gap:15
+    backgroundColor: "transparent",
+    gap: 15,
   },
   incomeButton: {
-    backgroundColor: '#00A86B',
+    backgroundColor: "#00A86B",
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   selectedIncome: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 1,
     borderWidth: 6,
-    borderColor: '#00A86B',
-    backgroundColor: '#00A86B',
+    borderColor: "#00A86B",
+    backgroundColor: "#00A86B",
     padding: 15,
-    borderRadius: 5,
-    },
+    borderRadius: 10,
+  },
   expenseButton: {
-    backgroundColor: '#FD3C4A',
+    backgroundColor: "#FD3C4A",
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   selectedExpense: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 1,
     borderWidth: 4,
-    borderColor: '#FD3C4A',
-    backgroundColor: '#FD3C4A',
+    borderColor: "#FD3C4A",
+    backgroundColor: "#FD3C4A",
     padding: 15,
-    borderRadius: 5,
-    },
-  buttonText: {
-    textAlign:'center',
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  submitButton: {
- 
-    // padding: 18,
-    gap: 10,
-    backgroundColor: '#7F3DFF',
-    borderRadius: 16,
-    padding: 12,
-    margin: 10,
-    width:'95%',
-    // textAlign:'center'
+    borderRadius: 10,
   },
   border: {
     // lineHeight:8,
-    marginTop:16,
+    marginTop: 16,
     borderWidth: 1,
-    borderColor: '#262653',
+    borderColor: "#262653",
     borderRadius: 16,
     padding: 7,
-    color: '#26265C',
-    fontWeight: 'bold',
-    
+    color: "#26265C",
+    fontWeight: "bold",
   },
-  shadow:{
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
+  buttonContainer: {
+    justifyContent: "flex-end",
   },
-  textInput: {
-    flex:1,
-    padding: 10,
-    width: '100%',
-    marginTop: 10,
-    marginLeft:10,
-    // fontFamily: 'Inter',
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: 32,
-    lineHeight:28,
-    // borderWidth:0, 
-    borderBottomWidth:2,
-    borderBottomColor:'gray',
-    // borderBottomColor:'transparent'
+  submitButton: {
+    // padding: 18,
+    gap: 10,
+    backgroundColor: "#00A86B",
+    borderRadius: 20,
+    padding: 12,
+    margin: 10,
+    width: "95%",
+    bottom: 0,
+    // textAlign:'center'
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginVertical: 10,
-    },
-    
-})
-
+});
