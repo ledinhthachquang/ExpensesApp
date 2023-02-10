@@ -290,6 +290,12 @@ const HomeScreen = ({ navigation }) => {
         >
           <AntDesign name="home" size={24} color="#66AFBB" />
         </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate("Chart")}
+        >
+          <AntDesign name="piechart" size={24} color="black" />
+        </TouchableOpacity>
         
         <TouchableOpacity
           style={styles.plusButton}

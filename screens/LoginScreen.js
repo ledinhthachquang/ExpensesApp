@@ -73,12 +73,7 @@ const LoginScreen = ({ navigation }) => {
       {!loading ? (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
           <StatusBar style="light" />
-          <Image
-            source={{
-              uri: "https://res.cloudinary.com/dc5xcbmvp/image/upload/v1675657593/upload/logo_ifv5gc.png?fbclid=IwAR03Q7fp1hFXBZylM5txwliy4mY0l54ibrN9LlBWGZzjJ6drW04KT7ZeKjU",
-            }}
-            style={{ width: 200, height: 200, marginBottom: 30 }}
-          />
+          <Image source={require('./../assets/logo.png')} style={{width: 200, height: 200, marginBottom: 20}} />
           <View style={styles.inputContainer}>
             {/* <Input
               type='email'
