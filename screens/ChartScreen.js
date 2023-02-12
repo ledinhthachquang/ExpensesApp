@@ -1,16 +1,4 @@
-// import { View, Text } from 'react-native'
-// import React from 'react'
-
-// const ChartScreen = () => {
-//   return (
-//     <View>
-//       <Text>ChartScreen</Text>
-//     </View>
-//   )
-// }
-
-// export default ChartScreen
-import React, { useRef } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -31,26 +19,82 @@ import { VictoryPie } from 'victory-native';
 import {Svg} from 'react-native-svg';
 // import * as Svg from 'react-native-svg';
 import { COLORS, FONTS, SIZES, icons, images } from '../constants';
+import {db, auth} from '../firebase'
 
 
 
-// export default function AddScreen ({navigation}) {
-//   return (
-//     <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
-//       <Text
-//         onPress={() => navigation.navigate('Home')}
-//         style={{fontSize:26,fontWeight:'bold'}}>Add Screen
-//       </Text>
-//     </View>
-//   )
-// }
 const ChartScreen = () => {
+    
 
   // dummy data
   const confirmStatus = "C"
   const pendingStatus = "P"
 
+  const [currentDate, setCurrentDate] = useState("");
+  useEffect(() => {
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+
+    setCurrentDate(date + "/" + month + "/" + year);
+  }, []);
+
+  var days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  Date.prototype.getDayName = function () {
+    return days[this.getDay()];
+  };
+  const [transactions, setTransactions] = useState([])
+  useEffect(() => {
+    const unsubscribe = db
+      .collection('expense')
+      .orderBy('timestamp', 'desc')
+      .onSnapshot((snapshot) =>
+        setTransactions(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      )
+
+    return unsubscribe
+  }, [])
+  const [filter, setFilter] = useState([])
+  useEffect(() => {
+    if (transactions) {
+      setFilter(
+        transactions.filter(
+          (transaction) => transaction.data.email === auth.currentUser.email
+        )
+      )
+    }
+  }, [transactions])
+//   console.log(filter)
+  const [categoriesDataa, setCategoriesDataa]= useState([])
+  useEffect(() => {
+    if (filter) {
+      setCategoriesDataa(
+       filter.map(
+              (categories)=> console.log('categories',categories.id, categories.data.type, categories.data.text ,categories.data.price, categories.data.category)
+       
+        )
+      )
+    }
+  }, [filter])
+//   console.log('categories data',categories.date)
+//   console.log(transactions)
+//   transactions.forEach(transaction => console.log(transaction.data.id))
+
   let categoriesData = [
+    
       {
           id: 1,
           name: "Education",
@@ -316,12 +360,12 @@ const ChartScreen = () => {
   function renderHeader() {
       return (
           <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: SIZES.padding, backgroundColor: COLORS.white }}>
-              <View>
+              {/* <View>
                   <Text style={{ color: COLORS.primary, ...FONTS.h2 }}>My Expenses</Text>
                   <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}>Summary (private)</Text>
-              </View>
+              </View> */}
 
-              <View style={{ flexDirection: 'row', marginTop: SIZES.padding, alignItems: 'center' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <View style={{
                       backgroundColor: COLORS.lightGray,
                       height: 50,
@@ -341,8 +385,8 @@ const ChartScreen = () => {
                   </View>
 
                   <View style={{ marginLeft: SIZES.padding }}>
-                      <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>11 Nov, 2020</Text>
-                      <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>18% more than last month</Text>
+                      <Text style={{ color: COLORS.primary, }}>{currentDate}</Text>
+                      <Text style={{  color: COLORS.darkgray }}>18% more than last month</Text>
                   </View>
               </View>
           </View>
@@ -351,11 +395,11 @@ const ChartScreen = () => {
 
   function renderCategoryHeaderSection() {
       return (
-          <View style={{ flexDirection: 'row', padding: SIZES.padding, justifyContent: 'space-between', alignItems: 'center' }}>
+          <View style={{ flexDirection: 'row',paddingHorizontal:15, justifyContent: 'space-between', alignItems: 'center' }}>
               {/* Title */}
               <View>
-                  <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>CATEGORIES</Text>
-                  <Text style={{ color: COLORS.darkgray, ...FONTS.body4 }}>{categories.length} Total</Text>
+                  <Text style={{ color: COLORS.primary, }}>CATEGORIES</Text>
+                  <Text style={{ color: COLORS.darkgray, }}>{categories.length} Total</Text>
               </View>
 
               {/* Button */}
@@ -432,7 +476,7 @@ const ChartScreen = () => {
                       tintColor: item.color
                   }}
               />
-              <Text style={{ marginLeft: SIZES.base, color: COLORS.primary, ...FONTS.h4 }}>{item.name}</Text>
+              <Text style={{ marginLeft: SIZES.base, color: COLORS.primary,  }}>{item.name}</Text>
           </TouchableOpacity>
       )
 
@@ -471,7 +515,7 @@ const ChartScreen = () => {
                       setShowMoreToggle(!showMoreToggle)
                   }}
               >
-                  <Text style={{ ...FONTS.body4 }}>{showMoreToggle ? "LESS" : "MORE"}</Text>
+                  <Text style={{ }}>{showMoreToggle ? "LESS" : "MORE"}</Text>
                   <Image
                       source={showMoreToggle ? icons.up_arrow : icons.down_arrow}
                       style={{ marginLeft: 5, width: 15, height: 15, alignSelf: 'center' }}
@@ -485,8 +529,8 @@ const ChartScreen = () => {
       return (
           <View style={{ height: 80, backgroundColor: COLORS.lightGray2, padding: SIZES.padding }}>
               {/* Title */}
-              <Text style={{ ...FONTS.h3, color: COLORS.primary }}>INCOMING EXPENSES</Text>
-              <Text style={{ ...FONTS.body4, color: COLORS.darkgray }}>12 Total</Text>
+              <Text style={{ color: COLORS.primary }}>INCOMING EXPENSES</Text>
+              <Text style={{  color: COLORS.darkgray }}>12 Total</Text>
           </View>
       )
   }
@@ -528,19 +572,19 @@ const ChartScreen = () => {
                       />
                   </View>
 
-                  <Text style={{ ...FONTS.h3, color: selectedCategory.color, }}>{selectedCategory.name}</Text>
+                  <Text style={{ color: selectedCategory.color, }}>{selectedCategory.name}</Text>
               </View>
 
               {/* Expense Description */}
               <View style={{ paddingHorizontal: SIZES.padding }}>
                   {/* Title and description */}
-                  <Text style={{ ...FONTS.h2, }}>{item.title}</Text>
-                  <Text style={{ ...FONTS.body3, flexWrap: 'wrap', color: COLORS.darkgray }}>
+                  <Text style={{  }}>{item.title}</Text>
+                  <Text style={{  flexWrap: 'wrap', color: COLORS.darkgray }}>
                       {item.description}
                   </Text>
 
-                  {/* Location */}
-                  <Text style={{ marginTop: SIZES.padding, ...FONTS.h4, }}>Location</Text>
+                  {/* Location
+                  <Text style={{ marginTop: SIZES.padding,  }}>Location</Text>
                   <View style={{ flexDirection: 'row' }}>
                       <Image
                           source={icons.pin}
@@ -551,8 +595,8 @@ const ChartScreen = () => {
                               marginRight: 5
                           }}
                       />
-                      <Text style={{ marginBottom: SIZES.base, color: COLORS.darkgray, ...FONTS.body4 }}>{item.location}</Text>
-                  </View>
+                      <Text style={{ marginBottom: SIZES.base, color: COLORS.darkgray,}}>{item.location}</Text>
+                  </View> */}
               </View>
 
               {/* Price */}
@@ -566,7 +610,7 @@ const ChartScreen = () => {
                       backgroundColor: selectedCategory.color,
                   }}
               >
-                  <Text style={{ color: COLORS.white, ...FONTS.body3 }}>CONFIRM {item.total.toFixed(2)} USD</Text>
+                  <Text style={{ color: COLORS.white,  }}>CONFIRM {item.total.toFixed(2)} USD</Text>
               </View>
           </View>
       )
@@ -589,7 +633,7 @@ const ChartScreen = () => {
               {
                   incomingExpenses.length == 0 &&
                   <View style={{ alignItems: 'center', justifyContent: 'center', height: 300 }}>
-                      <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>No Record</Text>
+                      <Text style={{ color: COLORS.primary,  }}>No Record</Text>
                   </View>
               }
 
@@ -687,8 +731,8 @@ const ChartScreen = () => {
                   />
   
                   <View style={{ position: 'absolute', top: '42%', left: "42%" }}>
-                      <Text style={{ ...FONTS.h1, textAlign: 'center' }}>{totalExpenseCount}</Text>
-                      <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Expenses</Text>
+                      <Text style={{  textAlign: 'center' }}>{totalExpenseCount}</Text>
+                      <Text style={{  textAlign: 'center' }}>Expenses</Text>
                   </View>
               </View>
   
@@ -735,8 +779,8 @@ const ChartScreen = () => {
                       />
                   </Svg>
                   <View style={{ position: 'absolute', top: '42%', left: "42%" }}>
-                      <Text style={{ ...FONTS.h1, textAlign: 'center' }}>{totalExpenseCount}</Text>
-                      <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Expenses</Text>
+                      <Text style={{ textAlign: 'center' }}>{totalExpenseCount}</Text>
+                      <Text style={{textAlign: 'center' }}>Expenses</Text>
                   </View>
               </View>
           )
@@ -772,12 +816,12 @@ const ChartScreen = () => {
                       }}
                   />
 
-                  <Text style={{ marginLeft: SIZES.base, color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.name}</Text>
+                  <Text style={{ marginLeft: SIZES.base, color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary,  }}>{item.name}</Text>
               </View>
 
               {/* Expenses */}
               <View style={{ justifyContent: 'center' }}>
-                  <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.y} USD - {item.label}</Text>
+                  <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary,}}>{item.y} USD - {item.label}</Text>
               </View>
           </TouchableOpacity>
       )
