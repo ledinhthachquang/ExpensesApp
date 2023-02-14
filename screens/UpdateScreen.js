@@ -91,13 +91,28 @@ const UpdateScreen = ({route, navigation}) => {
 
   // Select Dropdown
   const [selectedLanguage, setSelectedLanguage] = useState()
-  const [selectedCategory, setSelectedCategory] = useState()
-
+  const [selectedCategory, setSelectedCategory] = useState("expense");
+  const expenseCategories = [
+    { label: "🎓 Education", value: "education" },
+    { label: "🎮 Entertainment", value: "entertainment" },
+    { label: "👗 Clothes", value: "clothing" },
+    { label: "🍜 Food", value: "food" },
+    { label: "📦 Other", value: "other" }
+  ];
+  
+  const incomeCategories = [
+    { label: "💰 Salary", value: "salary", icon: "md-cash" },
+    { label: "🏦 Investment", value: "investment", icon: "md-trending-up" },
+    { label: "💵 Gift", value: "gift", icon: "md-gift" },
+    { label: "🪙 Bonus", value: "bonus", icon: "md-gift" },
+    { label: "📦 Other", value: "other", icon: "md-options" }
+  ];
+  
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <StatusBar style='dark' />
       <View style={styles.inputContainer}>
-      <View style={[styles.selectContainer,styles.shadow]}>
+      <View style={[styles.selectContainer]}>
         <TextInput
           style={styles.input}
           placeholder='Add Text'
@@ -149,17 +164,24 @@ const UpdateScreen = ({route, navigation}) => {
           </TouchableOpacity>
           </View>
           <View style={styles.border}>
-          <Picker
-          selectedValue={selectedCategory}
-          onValueChange={(itemCategory,itemIdx) =>
-          setSelectedCategory(itemCategory)}
-        >
-          <Picker.Item label='Education' value='education' />
-          <Picker.Item label='Nutrition' value='nutrition' />
-          <Picker.Item label='Clothing' value='clothing' />
-          <Picker.Item label='Food' value='food' />
-          <Picker.Item label='Other' value='other' />
-        </Picker>
+          <View style={styles.line} />
+            <View style={{ marginTop: 10, marginLeft: 10 }}>
+            <Text style={styles.title}>Category</Text>
+            <View>
+              <Picker
+                selectedValue={selectedCategory}
+                onValueChange={(itemCategory, itemIdx) => setSelectedCategory(itemCategory)}
+              >
+                {selectedLanguage === "expense"
+                  ? expenseCategories.map((category, index) => (
+                      <Picker.Item key={index} label={category.label} value={category.value} />
+                    ))
+                  : incomeCategories.map((category, index) => (
+                      <Picker.Item key={index} label={category.label} value={category.value} />
+                    ))}
+              </Picker>
+              </View>
+            </View>
           </View>
       
 
@@ -189,14 +211,14 @@ export default UpdateScreen
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFF6E5',
+    backgroundColor: "#FFF6E5",
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
+    padding: 20,
   },
   inputContainer: {
-    width: 300,
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
   },
   input: {
     height: 50,
@@ -218,39 +240,39 @@ const styles = StyleSheet.create({
     gap:15
   },
   incomeButton: {
-    backgroundColor: '#00A86B',
+    backgroundColor: "#00A86B",
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   selectedIncome: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 1,
-    borderWidth: 4,
-    borderColor: '#00A86B',
-    backgroundColor: '#00A86B',
+    borderWidth: 6,
+    borderColor: "#00A86B",
+    backgroundColor: "#00A86B",
     padding: 15,
-    borderRadius: 5,
-    },
+    borderRadius: 10,
+  },
   expenseButton: {
-    backgroundColor: '#FD3C4A',
+    backgroundColor: "#FD3C4A",
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   selectedExpense: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 1,
     borderWidth: 4,
-    borderColor: '#FD3C4A',
-    backgroundColor: '#FD3C4A',
+    borderColor: "#FD3C4A",
+    backgroundColor: "#FD3C4A",
     padding: 15,
-    borderRadius: 5,
-    },
+    borderRadius: 10,
+  },
     buttonText: {
       textAlign:'center',
       color: 'white',
@@ -285,12 +307,26 @@ const styles = StyleSheet.create({
     },
     selectContainer: {
      
-      backgroundColor: '#FDFCFC',
+      // backgroundColor: '#FDFCFC',
       // borderTopStartRadius: 50,
       // borderTopEndRadius:50,
       padding: 10,
       width: '100%',
-      height:'70%',
+      height:'75%',
       marginTop:38
+    },
+    buttonContainer: {
+      justifyContent: "flex-end",
+    },
+    submitButton: {
+      // padding: 18,
+      gap: 10,
+      backgroundColor: '#7F3DFF',
+      borderRadius: 20,
+      padding: 12,
+      margin: 10,
+      width: "95%",
+      bottom: 0,
+      // textAlign:'center'
     },
 })
