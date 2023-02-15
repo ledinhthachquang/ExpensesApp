@@ -13,9 +13,10 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import { Entypo } from '@expo/vector-icons';
-
+import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Fontisto } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import {auth,db} from '../firebase'
 import {  Avatar, ListItem } from "react-native-elements";
@@ -167,7 +168,7 @@ export default function EditProfileScreen({navigation}) {
                 opacity: 0.5,
               }}
             >
-              Name
+             <Ionicons name="person" size={24} color="black" />
             </Text>
             <TextInput
               placeholder= {user.displayName}
@@ -187,7 +188,7 @@ export default function EditProfileScreen({navigation}) {
                 opacity: 0.5,
               }}
             >
-              Username
+             <Ionicons name="mail-open-outline" size={24} color="black" />
             </Text>
             <TextInput
               placeholder={user.email}
@@ -207,7 +208,7 @@ export default function EditProfileScreen({navigation}) {
                 opacity: 0.5,
               }}
             >
-              Phone Number
+              <Feather name="phone-forwarded" size={24} color="black" />
             </Text>
             <TextInput
               placeholder="phonenumber"

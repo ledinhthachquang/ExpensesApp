@@ -16,6 +16,8 @@ import format from "date-fns/format";
 import { Picker } from "@react-native-picker/picker";
 import { db, auth } from "../firebase";
 import firebase from "firebase";
+import { Ionicons } from '@expo/vector-icons';
+
 
 const AddScreen = ({ navigation }) => {
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -87,6 +89,21 @@ const AddScreen = ({ navigation }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("expense");
   const [selectedCategory, setSelectedCategory] = useState("expense");
 
+  const expenseCategories = [
+    { label: "🎓 Education", value: "education", icon: "md-school" },
+    { label: "🎮 Entertainment", value: "entertainment", icon: "md-game-controller-b" },
+    { label: "👗 Clothes", value: "clothing", icon: "md-shirt" },
+    { label: "🍜 Food", value: "food", icon: "md-restaurant" },
+    { label: "📦 Other", value: "other", icon: "md-options" }
+  ];
+  
+  const incomeCategories = [
+    { label: "💰 Salary", value: "salary", icon: "md-cash" },
+    { label: "🏦 Investment", value: "investment", icon: "md-trending-up" },
+    { label: "💵 Gift", value: "gift", icon: "md-gift" },
+    { label: "🪙 Bonus", value: "bonus", icon: "md-gift" },
+    { label: "📦 Other", value: "other", icon: "md-options" }
+  ];
   return (
     <KeyboardAvoidingView style={styles.container}>
       <StatusBar style="dark" />
@@ -151,17 +168,6 @@ const AddScreen = ({ navigation }) => {
             </View>
             <View style={styles.line} />
 
-            {/* <View style={styles.border}>
-        <Picker
-          selectedValue={selectedLanguage}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedLanguage(itemValue)
-          }
-        >
-          <Picker.Item label='Expense' value='expense' />
-          <Picker.Item label='Income' value='income' />
-        </Picker>
-        </View> */}
 
             <View style={[styles.transactionTypeContainer]}>
               <TouchableOpacity
@@ -200,7 +206,7 @@ const AddScreen = ({ navigation }) => {
                   }
                 >
                   <Picker.Item label="🎓 Education" value="education" />
-                  <Picker.Item label="🎮 Entertaiment" value="entertaiment" />
+                  <Picker.Item label="🎮 Entertaiment" value="nutrition" />
                   <Picker.Item label="👗 Clothes" value="clothing" />
                   <Picker.Item label="🍜 Food" value="food" />
                   <Picker.Item label="📦 Other" value="other" />
@@ -239,6 +245,7 @@ export default AddScreen;
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#FFF6E5",
     flex: 1,
     padding: 20,
   },
@@ -263,6 +270,7 @@ const styles = StyleSheet.create({
   line: {
     borderBottomColor: "black",
     borderBottomWidth: 1,
+    // height:'10%',
     opacity: 0.05,
   },
   selectContainer: {
@@ -342,7 +350,7 @@ const styles = StyleSheet.create({
   submitButton: {
     // padding: 18,
     gap: 10,
-    backgroundColor: "#00A86B",
+    backgroundColor: '#7F3DFF',
     borderRadius: 20,
     padding: 12,
     margin: 10,

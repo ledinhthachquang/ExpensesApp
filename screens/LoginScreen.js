@@ -73,12 +73,7 @@ const LoginScreen = ({ navigation }) => {
       {!loading ? (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
           <StatusBar style="light" />
-          <Image
-            source={{
-              uri: "https://res.cloudinary.com/dc5xcbmvp/image/upload/v1675657593/upload/logo_ifv5gc.png?fbclid=IwAR03Q7fp1hFXBZylM5txwliy4mY0l54ibrN9LlBWGZzjJ6drW04KT7ZeKjU",
-            }}
-            style={{ width: 200, height: 200, marginBottom: 30 }}
-          />
+          <Image source={require('./../assets/logo.png')} style={{width: 200, height: 200, marginBottom: 20}} />
           <View style={styles.inputContainer}>
             {/* <Input
               type='email'
@@ -148,12 +143,7 @@ const LoginScreen = ({ navigation }) => {
       ) : (
         <View style={styles.container}>
           <StatusBar style="light" />
-          <Image
-            source={{
-              uri: "https://static-s.aa-cdn.net/img/gp/20600011886807/to-aGJ31KLwqc9AWaBUyL6NLbpFwN9VEliX7nQ_AU48aO4jH6M1MltWKmThWJPndJg=s300?v=1",
-            }}
-            style={{ width: 100, height: 100, marginBottom: 50 }}
-          />
+          <Image source={require('./../assets/logo.png')} style={{width: 200, height: 200, marginBottom: 20}} />
           <Text h4>Loading...</Text>
         </View>
       )}
@@ -169,7 +159,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     padding: 10,
     paddingTop: 120,
-    backgroundColor: "white",
+    backgroundColor: "#FFF6E5",
   },
   inputContainer: {
     width: 300,
