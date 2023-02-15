@@ -295,7 +295,10 @@ export default function Profile({ navigation }) {
             </View>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate("Export")}
+        >
           <View style={styles.featureBox}>
             <View
               style={{

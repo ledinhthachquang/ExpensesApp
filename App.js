@@ -14,8 +14,8 @@ import AllTransactions from './screens/AllTransactions'
 
 import Profile from './screens/Profile'
 import EditProfile from './screens/EditProfile'
-import ChartScreen from './screens/nhap'
-
+import ChartScreen from './screens/ChartScreen'
+import ExportScreen from './screens/ExportScreen'
 import TransactionDetail from './screens/TransactionDetail'
 
 
@@ -89,7 +89,7 @@ export default function App() {
         <Stack.Screen name='Profile' component={ProfileStack} />
         <Stack.Screen name='EditProfile' component={EditProfile} />
         <Stack.Screen name='Chart' component={ChartScreen} />
-
+        <Stack.Screen name='Export' component={ExportScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   )

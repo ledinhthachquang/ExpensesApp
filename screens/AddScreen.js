@@ -196,23 +196,35 @@ const AddScreen = ({ navigation }) => {
           
           </View> */}
             <View style={styles.line} />
-            <View style={{ marginTop: 10, marginLeft: 10 }}>
-              <Text style={styles.title}>Category</Text>
-              <View>
-                <Picker
-                  selectedValue={selectedCategory}
-                  onValueChange={(itemCategory, itemIdx) =>
-                    setSelectedCategory(itemCategory)
-                  }
-                >
-                  <Picker.Item label="🎓 Education" value="education" />
-                  <Picker.Item label="🎮 Entertaiment" value="nutrition" />
-                  <Picker.Item label="👗 Clothes" value="clothing" />
-                  <Picker.Item label="🍜 Food" value="food" />
-                  <Picker.Item label="📦 Other" value="other" />
-                </Picker>
-              </View>
-            </View>
+            <View style={styles.line} />
+            <View style={styles.line} />
+  <View style={{ marginTop: 10, marginLeft: 10 }}>
+    <Text style={styles.title}>Category</Text>
+    <View>
+      <Picker
+        selectedValue={selectedCategory}
+        onValueChange={(itemCategory, itemIdx) => setSelectedCategory(itemCategory)}
+      >
+        {selectedLanguage === "expense"
+          ? expenseCategories.map((category, index) => (
+              <Picker.Item 
+                key={index} 
+                label={category.label} 
+                value={category.value} 
+                icon={<Ionicons name={category.iconName} />} 
+              />
+            ))
+          : incomeCategories.map((category, index) => (
+              <Picker.Item 
+                key={index} 
+                label={category.label} 
+                value={category.value} 
+                icon={<Ionicons name={category.iconName} />} 
+              />
+            ))}
+      </Picker>
+    </View>
+  </View>
             {/* <Button
           containerStyle={[styles.button,styles.submitButton]}
           title='Add'

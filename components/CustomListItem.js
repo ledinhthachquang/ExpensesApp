@@ -1,35 +1,46 @@
-import React, {useState} from 'react'
-import {StyleSheet, View} from 'react-native'
-import {ListItem, Text, Divider} from 'react-native-elements'
-import {MaterialIcons} from '@expo/vector-icons'
-import ModalActions from './ModalActions'
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ListItem, Text, Divider } from 'react-native-elements';
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import ModalActions from './ModalActions';
 
-const CustomListItem = ({info, navigation, id}) => {
-  const [modalVisible, setModalVisible] = useState(false)
+const CustomListItem = ({ info, navigation, id }) => {
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <>
       <View>
         <ListItem onPress={() => setModalVisible(true)}>
-          {info.type === 'expense' ? (
-            <View style={styles.left}>
-              <MaterialIcons name='money-off' size={24} color='white' />
-            </View>
-          ) : (
-            <View style={styles.income}>
-              <MaterialIcons name='attach-money' size={24} color='white' />
-            </View>
-          )}
+          <View style={info.type === 'expense' ? styles.left : styles.income}>
+          <FontAwesome5
+          name={info.category === 'education' ? 'book' :
+            info.category === 'entertainment' ? 'gamepad' :
+            info.category === 'clothing' ? 'tshirt' :
+            info.category === 'food' ? 'utensils' :
+            info.category === 'other' ? 'ellipsis-h' :
+            info.category === 'salary' ? 'money-bill-alt' :
+            info.category === 'investment' ? 'chart-line' :
+            info.category === 'gift' ? 'gift' :
+            info.category === 'bonus' ? 'coins' :
+            info.category === 'other'  ? 'ellipsis-h' : ''}
+          size={24}
+          color='white'
+          />
+            {/* <MaterialCommunityIcons name="headphones-box" size={24} color="black" /> */}
+
+          </View>
           <ListItem.Content>
             <ListItem.Title
-              style={{fontWeight: 'bold', textTransform: 'capitalize', fontSize: 18}}
+              style={{
+                fontWeight: 'bold',
+                textTransform: 'capitalize',
+                fontSize: 18,
+              }}
             >
               {info?.text}
             </ListItem.Title>
-            <ListItem.Subtitle
-             style={{ fontSize: 16}}
-            >
-              {/* {new Date(info?.timestamp?.toDate()).toUTCString()} */}
+            <ListItem.Subtitle style={{ fontSize: 16 }}>
               {info?.userDate}
             </ListItem.Subtitle>
           </ListItem.Content>
@@ -45,7 +56,7 @@ const CustomListItem = ({info, navigation, id}) => {
             )}
           </View>
         </ListItem>
-        <Divider style={{backgroundColor: 'lightgrey'}} />
+        <Divider style={{ backgroundColor: 'lightgrey' }} />
       </View>
       <ModalActions
         modalVisible={modalVisible}
@@ -61,7 +72,7 @@ export default CustomListItem;
 
 const styles = StyleSheet.create({
   left: {
-    backgroundColor: '#533461',
+    backgroundColor: '#FD3C4A',
     borderRadius: 8,
     padding: 10,
   },
