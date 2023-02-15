@@ -14,7 +14,7 @@ import AllTransactions from './screens/AllTransactions'
 
 import Profile from './screens/Profile'
 import EditProfile from './screens/EditProfile'
-import ChartScreen from './screens/ChartScreen'
+import ChartScreen from './screens/nhap'
 
 import TransactionDetail from './screens/TransactionDetail'
 
