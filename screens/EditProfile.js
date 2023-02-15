@@ -81,51 +81,7 @@ export default function EditProfileScreen({navigation}) {
   //     alert('All fields are mandatory')
   //   }
   // }
-
   const user = auth.currentUser;
-  useEffect (() => {
-    const getUser = async () => {
-      // const docRef = collection('users')
-      // const snapshots = await getDoc(docRef)
-      // const docs = snapshots.docs.map((doc)=> doc.data()) 
-      // const docSnap = await getDoc(docRef);
-      // const docRef = doc(db, "users", "J05Nom2GmUuBcShx9NCv");
-      // const docSnap = await getDoc(docRef)
-      const citiesRef = db.collection('users');
-      const snapshot = await citiesRef.get();
-      snapshot.forEach(doc => {
-        console.log(doc.id, '=>', doc.data());
-        setFullName(user.displayName)
-        setEmail(user.email)
-      }); 
-    }
-      getUser();  
-  }, []);
-  // const updateUser1 = () => {
-  //   if (fullName && email) {
-  //     setSubmitLoading(true)
-  //     db.collection('users')
-  //       .doc('YpJfhbhAIpXswEjV9lbJ')
-  //       .update({
-  //         email: email,
-  //         displayName: fullName,
-          
-  //       })
-  //       .then(() => clearInputFields())
-  //       .catch((error) => alert(error.message))
-  //   } else {
-  //     setSubmitLoading(false)
-  //     alert('All fields are mandatory')
-  //   }
-  // }
-
-  // const clearInputFields = () => {
-  //   alert('Updated Successfully')
-  //   setEmail('')
-  //   setFullName('')
-  //   navigation.goBack()
-  //   setSubmitLoading(false)
-  // }
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.top}>

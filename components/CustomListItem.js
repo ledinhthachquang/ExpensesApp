@@ -45,7 +45,7 @@ const CustomListItem = ({info, navigation, id}) => {
             )}
           </View>
         </ListItem>
-        <Divider style={{ backgroundColor: 'lightgrey' }} />
+        <Divider style={{backgroundColor: 'lightgrey'}} />
       </View>
       <ModalActions
         modalVisible={modalVisible}

@@ -12,16 +12,18 @@
 // export default ChartScreen
 import React, { useRef } from "react";
 import {
-    SafeAreaView,
-    StyleSheet,
-    ScrollView,
-    StatusBar,
-    Image,
-    ImageBackground,
-    TouchableOpacity,
-    FlatList,
-    Animated,
-    Platform
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  StatusBar,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  FlatList,
+  Animated,
+  Platform
 } from 'react-native';
 // import * as React from 'react'
 import { VictoryPie } from 'victory-native';
@@ -31,22 +33,17 @@ import {Svg} from 'react-native-svg';
 import { COLORS, FONTS, SIZES, icons, images } from '../constants';
 
 
-function expenseData() {
-    useEffect(() => {
-        const getData = db
-            .collection('expense')
-            .get()
-            .then(querySnapshot => {
-                console.log('Total expense: ', querySnapshot.size);
-                setTotalExpenses(querySnapshot.size)
 
-                querySnapshot.forEach(documentSnapshot => {
-                    console.log('Expense ID: ', documentSnapshot.id, documentSnapshot.data());
-                });
-            });
-    })
-}
-
+// export default function AddScreen ({navigation}) {
+//   return (
+//     <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+//       <Text
+//         onPress={() => navigation.navigate('Home')}
+//         style={{fontSize:26,fontWeight:'bold'}}>Add Screen
+//       </Text>
+//     </View>
+//   )
+// }
 const ChartScreen = () => {
 
   // dummy data
@@ -841,3 +838,4 @@ const styles = StyleSheet.create({
   }
 })
 
+export default ChartScreen;
