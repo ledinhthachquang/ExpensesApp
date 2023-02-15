@@ -24,7 +24,7 @@ const CustomListItem = ({ info, navigation, id }) => {
             info.category === 'gift' ? 'gift' :
             info.category === 'bonus' ? 'coins' :
             info.category === 'other'  ? 'ellipsis-h' : ''}
-          size={24}
+          size={26}
           color='white'
           />
             {/* <MaterialCommunityIcons name="headphones-box" size={24} color="black" /> */}
