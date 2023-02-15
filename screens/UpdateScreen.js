@@ -155,7 +155,7 @@ const UpdateScreen = ({route, navigation}) => {
           setSelectedCategory(itemCategory)}
         >
           <Picker.Item label='Education' value='education' />
-          <Picker.Item label='Nutrition' value='nutrition' />
+          <Picker.Item label='Entertaiment' value='entertaiment' />
           <Picker.Item label='Clothing' value='clothing' />
           <Picker.Item label='Food' value='food' />
           <Picker.Item label='Other' value='other' />

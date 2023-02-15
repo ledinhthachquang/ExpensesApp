@@ -69,6 +69,7 @@ const HomeScreen = ({ navigation }) => {
   }, []);
 
   // stufff
+
   const [totalIncome, setTotalIncome] = useState([]);
   const [income, setIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState([]);

@@ -200,7 +200,7 @@ const AddScreen = ({ navigation }) => {
                   }
                 >
                   <Picker.Item label="🎓 Education" value="education" />
-                  <Picker.Item label="🎮 Entertaiment" value="nutrition" />
+                  <Picker.Item label="🎮 Entertaiment" value="entertaiment" />
                   <Picker.Item label="👗 Clothes" value="clothing" />
                   <Picker.Item label="🍜 Food" value="food" />
                   <Picker.Item label="📦 Other" value="other" />
