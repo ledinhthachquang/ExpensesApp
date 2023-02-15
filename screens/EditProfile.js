@@ -124,7 +124,7 @@ export default function EditProfileScreen({navigation}) {
                 opacity: 0.5,
               }}
             >
-              Name
+             <Ionicons name="person" size={24} color="black" />
             </Text>
             <TextInput
               placeholder= {user.displayName}

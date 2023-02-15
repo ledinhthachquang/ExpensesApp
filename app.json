@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Expense Tracker",
-    "slug": "Expense_Tracker",
+    "name": "SaveMoney",
+    "slug": "SaveMoney",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/and.png",
+    "icon": "./assets/logo.png",
     "splash": {
-      "image": "./assets/and.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#61ACB8"
+      "backgroundColor": "#FFF6E5"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/and.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#000000"
       }
     },
