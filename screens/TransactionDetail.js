@@ -9,8 +9,19 @@ import {db, auth} from '../firebase'
 import firebase from 'firebase'
 
 
-const TransactionDetail = ({ transaction, onDelete }) => {
- 
+
+
+const TransactionDetail = () => {
+  const transaction = {
+    id: 1,
+    amount: '$120',
+    note:'Buy some grocery',
+    date: '01/01/2022',
+    time: '16:20',
+    description: 'Shopping at the mall',
+    type: 'Expense',
+    category: 'Shopping'
+  };
   return (
     <View style={styles.container}>
       <View style={[styles.header,styles.shadow]}>
@@ -26,42 +37,66 @@ const TransactionDetail = ({ transaction, onDelete }) => {
       </View>
       <View style={[styles.amountContainer,styles.shadow]}>
         <Text style={styles.amount}>
-          {/* <Image source={require('path/to/dollar-icon')} style={styles.icon} />  */}
           {transaction.amount}
         </Text>
         <View style={styles.noteContainer}>
-          <Text style={styles.note}>{transaction.note}</Text>
+          <Text style={styles.note}>
+            {transaction.note}
+            </Text>
         </View>
         <View style={styles.dateContainer}>
-          <Text style={styles.date}>{transaction.date}</Text>
-          <Text style={styles.time}>{transaction.time}</Text>
+          <Text style={styles.date}>
+            {transaction.date}
+          </Text>
+          <Text style={styles.time}>
+            {transaction.time}
+            </Text>
         </View>
       </View>
       <View style={[    styles.typeContainer,styles.shadow]}>
         <View style={styles.type}>
           <Text style={{color:'#91919F',fontWeight:500}}>Type</Text>
-          <Text style={styles.highlight}>{transaction.type}</Text>
+          <Text style={styles.highlight}>
+            {transaction.type}
+            </Text>
         </View>
         <View style={styles.category}>
           <Text style={{color:'#91919F',fontWeight:500}}>Category</Text>
-          <Text style={styles.highlight}>{transaction.category}</Text>
+          <Text style={styles.highlight}>
+            {transaction.category}
+            </Text>
         </View>
       </View>
       <View style={styles.divider}></View>
       <View style={styles.descriptionContainer}>
         <Text style={{color:'#91919F'}}>Discription</Text>
-        <Text style={styles.description}>{transaction.description}</Text>
+        <Text style={styles.description}>
+          {transaction.description}
+          </Text>
       </View>
       <View style={styles.editButtonContainer}>
         <TouchableOpacity 
             style={styles.editButton} 
-            onPress={() => handleEdit(transaction)}>
+            onPress={() => handleEdit(transaction)}
+            >
         <Text style={styles.editButtonText}>Edit</Text>
         </TouchableOpacity>
         </View>
     </View>
   );
 };
+
+//     const mockTransaction = {
+//       id: 1,
+//       amount: '$50.00',
+//       note: 'Groceries',
+//       date: '11/20/2020',
+//       time: '3:00 PM',
+//       type: 'Expense',
+//       category: 'Food & Drinks',
+//       description: 'Weekly groceries' 
+//     };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -86,9 +121,9 @@ const styles = StyleSheet.create({
     color : 'white'
   },
   title: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontStyle: 'normal',
-    fontWeight: '600',
+    // fontWeight: '600',
     fontSize: 18,
     lineHeight: 22,
     color: '#FFFFFF'
@@ -108,18 +143,18 @@ const styles = StyleSheet.create({
     borderBottomEndRadius: 24
   },
   amount: {
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontStyle: 'normal',
     color: '#FCFCFC',
     fontSize: 48,
     lineHeight:80,
-    fontWeight: 700,
+    // fontWeight: 700,
   },
   highlight:{
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontStyle: 'normal',
     lineHeight:18,
-    fontWeight: 800,
+    // fontWeight: 800,
   },
   noteContainer: {
     // padding: 20,
@@ -128,7 +163,7 @@ const styles = StyleSheet.create({
   },
   note: {
     fontSize: 16,
-    fontWeight:500,
+    // fontWeight:500,
     color: '#FCFCFC',
   },
   dateContainer: {
@@ -175,7 +210,7 @@ const styles = StyleSheet.create({
     padding: 10,
     // borderRightWidth: 1,
     // borderRightColor: 'black',
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontStyle: 'normal',
     
   },
@@ -184,9 +219,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     // padding: 10,
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontStyle: 'normal',
-    fontWeight:400,
+    // fontWeight:400,
   },
   divider: {
     borderBottomWidth:4.5,
@@ -207,7 +242,7 @@ const styles = StyleSheet.create({
   description: {
     color: 'lightblack',
     fontSize: 16,
-    fontFamily: 'Inter',
+    // fontFamily: 'Inter',
     fontStyle: 'normal',
   },
   editButtonContainer: {
@@ -229,7 +264,7 @@ const styles = StyleSheet.create({
   },
   editButtonText: {
     color: 'white',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     textAlign:"center"
     
   },
@@ -242,4 +277,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TransactionDetail;
+export default TransactionDetail
