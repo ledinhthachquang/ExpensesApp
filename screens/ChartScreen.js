@@ -161,7 +161,7 @@ const ChartScreen = () => {
   //    { x: "education", y: education },
   //    { x: "others", y: others },
   //  ];
-console.log(clothing)
+console.log(enterTaiment)
   let categoriesData = [
      {
       id : 1,
@@ -192,7 +192,7 @@ console.log(clothing)
 
   const categoryListHeightAnimationValue = useRef(new Animated.Value(115)).current;
 
-  const categories = [
+  const [categories, setCategories] = useState([
     {
       id : 1,
       name : "food",
@@ -220,7 +220,7 @@ console.log(clothing)
       color: "#3e04c3"
      }
 
-  ]
+  ])
   // console.log(categories)
 
  
@@ -233,7 +233,7 @@ console.log(clothing)
 
   function renderHeader() {
       return (
-          <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: SIZES.padding, backgroundColor: COLORS.white }}>
+        <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: SIZES.padding, backgroundColor: COLORS.white }}>
               
               <View style={{ flexDirection: 'row', marginTop: SIZES.padding, alignItems: 'center' }}>
                   <View style={{
@@ -385,103 +385,103 @@ console.log(clothing)
                                           }
                                       }]
                                   }
-                              }
-                          }]}
-      
-                      />
-                  </Svg>
-                  <View style={{ position: 'absolute', top: '42%', left: "42%" }}>
-                      <Text style={{ ...FONTS.h1, textAlign: 'center' }}>{totalExpenseCount}</Text>
-                      <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Expenses</Text>
-                  </View>
-              </View>
-          )
-      }
-      
+                                }
+                            }]}
+        
+                        />
+                    </Svg>
+                    <View style={{ position: 'absolute', top: '42%', left: "42%" }}>
+                        <Text style={{ ...FONTS.h1, textAlign: 'center' }}>{totalExpenseCount}</Text>
+                        <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Expenses</Text>
+                    </View>
+                </View>
+            )
+        }
+        
+    }
+  
+    function renderExpenseSummary() {
+        let data = processCategoryDataToDisplay()
+  
+        const renderItem = ({ item }) => (
+            <TouchableOpacity
+                style={{
+                    flexDirection: 'row',
+                    height: 40,
+                    paddingHorizontal: SIZES.radius,
+                    borderRadius: 10,
+                    backgroundColor: (selectedCategory && selectedCategory.name == item.name) ? item.color : COLORS.white
+                }}
+                onPress={() => {
+                    let categoryName = item.name
+                    setSelectCategoryByName(categoryName)
+                }}
+            >
+                {/* Name/Category */}
+                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                    <View
+                        style={{
+                            width: 20,
+                            height: 20,
+                            backgroundColor: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : item.color,
+                            borderRadius: 5
+                        }}
+                    />
+  
+                    <Text style={{ marginLeft: SIZES.base, color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.name}</Text>
+                </View>
+  
+                {/* Expenses */}
+                <View style={{ justifyContent: 'center' }}>
+                    <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.y} USD - {item.label}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+  
+        return (
+            <View style={{ padding: SIZES.padding }}>
+                <FlatList
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={item => `${item.id}`}
+                />
+            </View>
+  
+        )
+    }
+  
+    return (
+        <View style={{ flex: 1, backgroundColor: COLORS.lightGray2 }}>
+            {/* Nav bar section */}
+            {/* {renderNavBar()} */}
+  
+            {/* Header section */}
+            {renderHeader()}
+  
+            {/* Category Header Section */}
+            
+  
+            <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
+               
+                
+                    
+                    <View>
+                        {renderChart()}
+                        {renderExpenseSummary()}
+                    </View>
+                
+            </ScrollView>
+        </View>
+    )
   }
-
-  function renderExpenseSummary() {
-      let data = processCategoryDataToDisplay()
-
-      const renderItem = ({ item }) => (
-          <TouchableOpacity
-              style={{
-                  flexDirection: 'row',
-                  height: 40,
-                  paddingHorizontal: SIZES.radius,
-                  borderRadius: 10,
-                  backgroundColor: (selectedCategory && selectedCategory.name == item.name) ? item.color : COLORS.white
-              }}
-              onPress={() => {
-                  let categoryName = item.name
-                  setSelectCategoryByName(categoryName)
-              }}
-          >
-              {/* Name/Category */}
-              <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                  <View
-                      style={{
-                          width: 20,
-                          height: 20,
-                          backgroundColor: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : item.color,
-                          borderRadius: 5
-                      }}
-                  />
-
-                  <Text style={{ marginLeft: SIZES.base, color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.name}</Text>
-              </View>
-
-              {/* Expenses */}
-              <View style={{ justifyContent: 'center' }}>
-                  <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.y} USD - {item.label}</Text>
-              </View>
-          </TouchableOpacity>
-      )
-
-      return (
-          <View style={{ padding: SIZES.padding }}>
-              <FlatList
-                  data={data}
-                  renderItem={renderItem}
-                  keyExtractor={item => `${item.id}`}
-              />
-          </View>
-
-      )
-  }
-
-  return (
-      <View style={{ flex: 1, backgroundColor: COLORS.lightGray2 }}>
-          {/* Nav bar section */}
-          {/* {renderNavBar()} */}
-
-          {/* Header section */}
-          {renderHeader()}
-
-          {/* Category Header Section */}
-          
-
-          <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
-             
-              
-                  
-                  <View>
-                      {renderChart()}
-                      {renderExpenseSummary()}
-                  </View>
-              
-          </ScrollView>
-      </View>
-  )
-}
-
-
-
-
-
-function expenseData() {
-  useEffect(() => {
-    const getData = db
+  
+  
+  
+  
+  
+  function expenseData() {
+    useEffect(() => {
+        const getData = db
       .collection("expense")
       .get()
       .then((querySnapshot) => {
@@ -579,7 +579,6 @@ function expenseData() {
 //   }, []);
 //   const [totalFood, setTotalFood] = useState([]);
 //   //   console.log('transaction', transactions)
-
 //   const [food, setFood] = useState(0);
 //   const [totalEnterTaiment, setTotalEnterTaiment] = useState([]);
 //   const [enterTaiment, setEnterTaiment] = useState(0);
