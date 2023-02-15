@@ -164,17 +164,24 @@ const UpdateScreen = ({route, navigation}) => {
           </TouchableOpacity>
           </View>
           <View style={styles.border}>
-          <Picker
-          selectedValue={selectedCategory}
-          onValueChange={(itemCategory,itemIdx) =>
-          setSelectedCategory(itemCategory)}
-        >
-          <Picker.Item label='Education' value='education' />
-          <Picker.Item label='Nutrition' value='nutrition' />
-          <Picker.Item label='Clothing' value='clothing' />
-          <Picker.Item label='Food' value='food' />
-          <Picker.Item label='Other' value='other' />
-        </Picker>
+          <View style={styles.line} />
+            <View style={{ marginTop: 10, marginLeft: 10 }}>
+            <Text style={styles.title}>Category</Text>
+            <View>
+              <Picker
+                selectedValue={selectedCategory}
+                onValueChange={(itemCategory, itemIdx) => setSelectedCategory(itemCategory)}
+              >
+                {selectedLanguage === "expense"
+                  ? expenseCategories.map((category, index) => (
+                      <Picker.Item key={index} label={category.label} value={category.value} />
+                    ))
+                  : incomeCategories.map((category, index) => (
+                      <Picker.Item key={index} label={category.label} value={category.value} />
+                    ))}
+              </Picker>
+              </View>
+            </View>
           </View>
       
 
