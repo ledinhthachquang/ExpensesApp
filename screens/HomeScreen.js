@@ -199,7 +199,7 @@ const HomeScreen = ({ navigation }) => {
               Total Balance
             </Text>
             <Text h3 style={{ textAlign: "center", color: "#000" }}>
-              {totalBalance}
+              {totalBalance}đ
             </Text>
           </View>
           <View style={styles.cardBottom}>
@@ -220,8 +220,8 @@ const HomeScreen = ({ navigation }) => {
               <View>
                 <Text style={{ color: "#fff", fontSize: 20 }}>Income</Text>
                 <Text
-                  style={{ color: "#fff", fontSize: 22 }}
-                >{` ${income}`}</Text>
+                  style={{ color: "#fff", fontSize: 20 }}
+                >{` ${income}`}đ</Text>
               </View>
             </View>
 
@@ -241,9 +241,9 @@ const HomeScreen = ({ navigation }) => {
               </Text>
               <View>
                 <Text style={{ color: "#fff", fontSize: 20 }}>Espence</Text>
-                <Text style={{ color: "#fff", fontSize: 22 }}>
+                <Text style={{ color: "#fff", fontSize: 20 }}>
                   
-                  {` ${expense}`}
+                  {` ${expense}`}đ
                 </Text>
               </View>
             </View>
