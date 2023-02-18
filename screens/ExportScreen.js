@@ -1,100 +1,139 @@
-import React, { useRef } from 'react';
-import { View, Text, TouchableOpacity, Image, FlatList, StyleSheet } from 'react-native';
-import { captureRef } from 'react-native-view-shot';
-const transactionData = [
-    {
-      id: '1',
-      date: '2022-02-12',
-      description: 'Groceries',
-      amount: '$50.00',
-    },
-    {
-      id: '2',
-      date: '2022-02-10',
-      description: 'Gas',
-      amount: '$30.00',
-    },
-    {
-      id: '3',
-      date: '2022-02-05',
-      description: 'Dinner',
-      amount: '$75.00',
-    },
-  ];
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
+// import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
+import { db, auth } from '../firebase';
+
 const ExportScreen = () => {
-    const listRef = useRef(null);
+  const [transactions, setTransactions] = useState([]);
+  const [fileFormat, setFileFormat] = useState(null);
+  useEffect(() => {
+    const unsubscribe = db
+      .collection('expense')
+      .where('email', '==', auth.currentUser.email)
+      .orderBy('timestamp', 'desc')
+      .onSnapshot((snapshot) =>
+        setTransactions(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+    return unsubscribe;
+  }, []);
 
-    const exportList = async () => {
-      const listImage = await captureRef(listRef, {
-        format: 'jpg',
-        quality: 0.8,
-        result: 'data-uri',
-      });
-      // do something with the captured list image
-    };
-  
-    const renderItem = ({ item }) => (
-      <View style={styles.item}>
-        <Text style={styles.itemDate}>{item.date}</Text>
-        <Text style={styles.itemDescription}>{item.description}</Text>
-        <Text style={styles.itemAmount}>{item.amount}</Text>
-      </View>
-    );
-  
-    return (
-      <View style={styles.container}>
-        <FlatList
-          data={transactionData}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          ref={listRef}
-        />
-        <TouchableOpacity style={styles.exportButton} onPress={exportList}>
-          <Text style={styles.exportButtonText}>Export List</Text>
-        </TouchableOpacity>
-        {/* Display the captured image here */}
-        {/* <Image source={{ uri: capturedListImage }} /> */}
-      </View>
-    );
+  const exportData = async () => {
+    if (!fileFormat) {
+      Alert.alert('File Format not selected', 'Please select a file format to export.');
+      return;
+    }
+    const fileName = `transactions_${new Date().toISOString()}.${fileFormat}`;
+    const csvData = transactions.map(({ data }) => {
+      const { text, price, date, type, userDate, category } = data;
+      return `${text},${price},${date},${type},${userDate},${category}`;
+    }).join('\n');
+    try {
+      const fileUri = FileSystem.cacheDirectory + fileName;
+      await FileSystem.writeAsStringAsync(fileUri, csvData);
+      await Sharing.shareAsync(fileUri, { mimeType: `text/${fileFormat}` });
+    } catch (error) {
+      Alert.alert('Export Failed', error.message);
+    }
   };
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#f5fcff',
-    },
-    item: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: '#ccc',
-    },
-    itemDate: {
-      fontWeight: 'bold',
-      fontSize: 16,
-    },
-    itemDescription: {
-      flex: 1,
-      marginLeft: 16,
-    },
-    itemAmount: {
-      fontWeight: 'bold',
-      fontSize: 16,
-    },
-    exportButton: {
-      backgroundColor: '#3498db',
-      padding: 16,
-      borderRadius: 5,
-      alignSelf: 'center',
-      marginTop: 20,
-    },
-    exportButtonText: {
-      color: 'white',
-      fontWeight: 'bold',
-    },
-  });
 
+  return (
+    <View style={styles.container}>
+      <Text style={styles.heading}>Export Transactions</Text>
+      <Text style={styles.label}>Select File Format:</Text>
+      <View style={styles.formatSelector}>
+        <TouchableOpacity
+          style={[styles.formatButton, fileFormat === 'csv' && styles.formatButtonSelected]}
+          onPress={() => setFileFormat('csv')}
+        >
+          <Text style={styles.formatButtonText}>CSV</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.formatButton, fileFormat === 'qif' && styles.formatButtonSelected]}
+          onPress={() => setFileFormat('qif')}
+        >
+          <Text style={styles.formatButtonText}>QIF</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.formatButton, fileFormat === 'xml' && styles.formatButtonSelected]}
+          onPress={() => setFileFormat('xml')}
+        >
+          <Text style={styles.formatButtonText}>XML</Text>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={styles.exportButton} onPress={exportData}>
+        <Text style={styles.exportButtonText}>Export</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 20,
+  },
+  formatSelector: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+    marginBottom: 30,
+  },
+  formatButton: {
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#2196F3',
+    backgroundColor: 'white',
+    padding: 10,
+    margin: 5,
+  },
+  selectedFormatButton: {
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#2196F3',
+    backgroundColor: '#2196F3',
+    padding: 10,
+    margin: 5,
+  },
+  formatText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#2196F3',
+  },
+  selectedFormatText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  exportButton: {
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#2196F3',
+    backgroundColor: '#2196F3',
+    padding: 10,
+    marginTop: 30,
+  },
+  exportButtonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+});
 export default ExportScreen
