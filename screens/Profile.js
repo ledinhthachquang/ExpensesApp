@@ -274,7 +274,10 @@ export default function Profile({ navigation }) {
         <Text> {totalBalance}</Text>
       </View>
       <View style={{ margin: 20 }}>
-        <TouchableOpacity>
+        <TouchableOpacity
+         activeOpacity={0.5}
+         onPress={() => navigation.navigate("Import")}
+        >
           <View style={styles.featureBox}>
             <View
               style={{

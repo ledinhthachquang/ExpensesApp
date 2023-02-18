@@ -16,6 +16,7 @@ import Profile from './screens/Profile'
 import EditProfile from './screens/EditProfile'
 import ChartScreen from './screens/ChartScreen'
 import ExportScreen from './screens/ExportScreen'
+import ImportScreen from './screens/ImportScreen'
 import TransactionDetail from './screens/TransactionDetail'
 
 
@@ -90,6 +91,7 @@ export default function App() {
         <Stack.Screen name='EditProfile' component={EditProfile} />
         <Stack.Screen name='Chart' component={ChartScreen} />
         <Stack.Screen name='Export' component={ExportScreen}/>
+        <Stack.Screen name='Import' component={ImportScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
