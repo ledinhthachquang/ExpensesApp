@@ -47,11 +47,11 @@ const CustomListItem = ({ info, navigation, id }) => {
           <View>
             {info.type === 'expense' ? (
               <Text style={styles.right}>
-                $ -{Number(info?.price)}
+                 -{Number(info?.price)}đ
               </Text>
             ) : (
               <Text style={styles.rightIncome}>
-                $ {Number(info?.price)}
+                 {Number(info?.price)}đ
               </Text>
             )}
           </View>
