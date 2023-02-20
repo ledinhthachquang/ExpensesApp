@@ -20,7 +20,7 @@ const HomeScreen = ({ navigation }) => {
   };
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: "Expense Tracker",
+      title: "Money App",
       headerRight: () => (
         <View style={{ marginRight: 20 }}>
           <TouchableOpacity activeOpacity={0.5} onPress={signOutUser}>

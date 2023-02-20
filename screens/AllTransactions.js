@@ -1,5 +1,5 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react'
-import {ScrollView, StyleSheet, View} from 'react-native'
+import {ScrollView, StyleSheet, View,Button} from 'react-native'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import CustomListItem from '../components/CustomListItem'
 import {db, auth} from '../firebase'
@@ -39,6 +39,7 @@ const AllTransactions = ({navigation}) => {
     }
   }, [transactions])
   return (
+    
     <>
       {filter?.length > 0 ? (
         <SafeAreaView style={styles.container}>
@@ -80,4 +81,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  filterBar: {
+    flexDirection: 'row',
+    // flex: 1,
+    height: 60,
+},
 })

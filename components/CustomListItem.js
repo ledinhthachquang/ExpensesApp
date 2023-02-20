@@ -27,8 +27,6 @@ const CustomListItem = ({ info, navigation, id }) => {
           size={24}
           color='white'
           />
-            {/* <MaterialCommunityIcons name="headphones-box" size={24} color="black" /> */}
-
           </View>
           <ListItem.Content>
             <ListItem.Title

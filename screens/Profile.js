@@ -339,7 +339,13 @@ export default function Profile({ navigation }) {
                 marginLeft: 10,
               }}
             >
-              <Text style={styles.featureName}>Setting</Text>
+              <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate("Setting")}
+        >
+          <Text style={styles.featureName}>Setting</Text>
+        </TouchableOpacity>
+              
             </View>
           </View>
         </TouchableOpacity>
@@ -360,7 +366,13 @@ export default function Profile({ navigation }) {
                 marginLeft: 10,
               }}
             >
-              <Text style={styles.featureName}>Help</Text>
+              <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate("Help")}
+        >
+          <Text style={styles.featureName}>Help</Text>
+        </TouchableOpacity>
+              
             </View>
           </View>
         </TouchableOpacity>
@@ -381,7 +393,10 @@ export default function Profile({ navigation }) {
                 marginLeft: 10,
               }}
             >
+              
               <Text style={styles.featureName}>Logout</Text>
+              
+              
             </View>
           </View>
         </TouchableOpacity>
