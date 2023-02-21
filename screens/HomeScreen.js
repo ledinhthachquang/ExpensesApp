@@ -38,7 +38,7 @@ const HomeScreen = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = db
       .collection("expense")
-      .orderBy("timestamp", "desc")
+      .orderBy("date", "desc")
       .onSnapshot(
         (snapshot) =>
           setTransactions(
