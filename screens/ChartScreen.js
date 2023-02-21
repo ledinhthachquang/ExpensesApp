@@ -570,7 +570,6 @@ const ChartScreen = () => {
       </View>
     );
   }
-
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.lightGray2 }}>
       {/* Nav bar section */}

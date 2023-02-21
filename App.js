@@ -18,6 +18,10 @@ import ChartScreen from './screens/ChartScreen'
 import ExportScreen from './screens/ExportScreen'
 import ImportScreen from './screens/ImportScreen'
 import TransactionDetail from './screens/TransactionDetail'
+import HelpScreen from './screens/HelpScreen'
+import PrivacyScreen from './screens/PrivacyScreen'
+import TermScreen from './screens/TermScreen'
+import SettingScreen from './screens/SettingScreen'
 
 
 
@@ -92,6 +96,10 @@ export default function App() {
         <Stack.Screen name='Chart' component={ChartScreen} />
         <Stack.Screen name='Export' component={ExportScreen}/>
         <Stack.Screen name='Import' component={ImportScreen}/>
+        <Stack.Screen name='Help' component={HelpScreen}/>
+        <Stack.Screen name='Privacy' component={PrivacyScreen}/>
+        <Stack.Screen name='Terms & Definitions' component={TermScreen}/>
+        <Stack.Screen name='Setting' component={SettingScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
