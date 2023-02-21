@@ -110,12 +110,6 @@ const AddScreen = ({ navigation }) => {
       <ScrollView>
         <View style={styles.inputContainer}>
           <View style={styles.amountContainer}>
-            {/* <TouchableOpacity>
-              <Image
-                source={require("./../assets/icon.png")}
-                style={styles.icon1}
-              />
-            </TouchableOpacity> */}
             <TextInput
               style={[styles.textInput, styles.shadow]}
               textAlign={"center"}
@@ -197,10 +191,7 @@ const AddScreen = ({ navigation }) => {
                 <Text style={styles.buttonText}>Income</Text>
               </TouchableOpacity>
             </View>
-            {/* <View style={styles.selectRow}>
-          <Text style={styles.title}>Category</Text>
-          
-          </View> */}
+
             <View style={styles.line} />
             <View style={styles.line} />
             <View style={styles.line} />
@@ -231,13 +222,7 @@ const AddScreen = ({ navigation }) => {
       </Picker>
     </View>
   </View>
-            {/* <Button
-          containerStyle={[styles.button,styles.submitButton]}
-          title='Add'
-          color="#1E6738"
-          onPress={createExpense}
-          loading={submitLoading}
-        /> */}
+
           </View>
           <View style={styles.line} />
         </View>
