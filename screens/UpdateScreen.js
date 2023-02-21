@@ -91,7 +91,7 @@ const UpdateScreen = ({route, navigation}) => {
 
   // Select Dropdown
   const [selectedLanguage, setSelectedLanguage] = useState()
-  const [selectedCategory, setSelectedCategory] = useState("expense");
+  const [selectedCategory, setSelectedCategory] = useState("education");
   const expenseCategories = [
     { label: "🎓 Education", value: "education" },
     { label: "🎮 Entertainment", value: "entertainment" },
@@ -154,12 +154,18 @@ const UpdateScreen = ({route, navigation}) => {
           
           <TouchableOpacity
               style={selectedLanguage === 'expense' ? styles.selectedExpense : styles.expenseButton}
-              onPress={() => setSelectedLanguage('expense')}>
+              onPress={() => {setSelectedLanguage("expense");
+              setSelectedCategory("education")
+}
+}>
               <Text style={styles.buttonText}>Expense</Text>
           </TouchableOpacity>
           <TouchableOpacity
               style={selectedLanguage === 'income' ? styles.selectedIncome : styles.incomeButton}
-              onPress={() => setSelectedLanguage('income')}>
+              onPress={() => {
+                setSelectedLanguage("income");
+                setSelectedCategory("salary");
+              }}>
               <Text style={styles.buttonText}>Income</Text>
           </TouchableOpacity>
           </View>

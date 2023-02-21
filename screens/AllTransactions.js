@@ -1,18 +1,16 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react'
-import {ScrollView, StyleSheet, View,Button} from 'react-native'
-import {SafeAreaView} from 'react-native-safe-area-context'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomListItem from '../components/CustomListItem'
-import {db, auth} from '../firebase'
-import {Text} from 'react-native-elements'
-import {FontAwesome5} from '@expo/vector-icons'
+import { db, auth } from '../firebase'
+import { Text, Icon, Button } from 'react-native-elements'
+import { FontAwesome5 } from '@expo/vector-icons'
+// import FilterIcon from '../components/FilterIcon'
 
-const AllTransactions = ({navigation}) => {
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: 'All Transactions',
-    })
-  }, [])
+const AllTransactions = ({ navigation }) => {
+  const [showFilter, setShowFilter] = useState(false);
   const [transactions, setTransactions] = useState([])
+  const [filter, setFilter] = useState([])
   useEffect(() => {
     const unsubscribe = db
       .collection('expense')
@@ -25,10 +23,8 @@ const AllTransactions = ({navigation}) => {
           }))
         )
       )
-
     return unsubscribe
   }, [])
-  const [filter, setFilter] = useState([])
   useEffect(() => {
     if (transactions) {
       setFilter(
@@ -38,36 +34,52 @@ const AllTransactions = ({navigation}) => {
       )
     }
   }, [transactions])
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: 'All Transactions',
+      headerRight: () => (
+        <Button
+          type="clear"
+          // icon={<FontAwesome5 name="filter" size={23} color="#fff" />}
+          onPress={() => setShowFilter(!showFilter)}
+        />
+      ),
+    })
+  }, [navigation, showFilter])
   return (
-    
     <>
-      {filter?.length > 0 ? (
-        <SafeAreaView style={styles.container}>
-          <ScrollView>
-            {filter?.map((info) => (
-              <View key={info.id}>
-                <CustomListItem
-                  info={info.data}
-                  navigation={navigation}
-                  id={info.id}
-                />
-              </View>
-            ))}
-          </ScrollView>
-        </SafeAreaView>
+      {showFilter ? (
+        <FillterIcon transactions={transactions} setFilter={setFilter} />
       ) : (
-        <View style={styles.containerNull}>
-          <FontAwesome5 name='list-alt' size={24} color='#EF8A76' />
-          <Text h4 style={{color: '#4A2D5D'}}>
-            No Transactions
-          </Text>
-        </View>
+        filter?.length > 0 ? (
+          <SafeAreaView style={styles.container}>
+            <ScrollView>
+              {filter?.map((info) => (
+                <View key={info.id}>
+                  <CustomListItem
+                    info={info.data}
+                    navigation={navigation}
+                    id={info.id}
+                  />
+                </View>
+              ))}
+            </ScrollView>
+          </SafeAreaView>
+        ) : (
+          <View style={styles.containerNull}>
+            <FontAwesome5 name='list-alt' size={24} color='#EF8A76' />
+            <Text h4 style={{color: '#4A2D5D'}}>
+              No Transactions
+            </Text>
+          </View>
+        )
       )}
     </>
   )
 }
 
 export default AllTransactions
+
 
 const styles = StyleSheet.create({
   container: {
@@ -81,9 +93,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  filterBar: {
-    flexDirection: 'row',
-    // flex: 1,
-    height: 60,
-},
 })
