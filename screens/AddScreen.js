@@ -89,6 +89,7 @@ const AddScreen = ({ navigation }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("expense");
   const [selectedCategory, setSelectedCategory] = useState("education");
 
+
   const expenseCategories = [
     { label: "🎓 Education", value: "education", icon: "md-school" },
     { label: "🎮 Entertainment", value: "entertainment", icon: "md-game-controller-b" },
@@ -184,8 +185,10 @@ const AddScreen = ({ navigation }) => {
                     : styles.incomeButton
                 }
                 onPress={() => {
-                  setSelectedLanguage("income");
-                  setSelectedCategory("salary");
+
+                  setSelectedLanguage("income")
+                  setSelectedCategory("salary")
+
                 }}
               >
                 <Text style={styles.buttonText}>Income</Text>
@@ -201,6 +204,7 @@ const AddScreen = ({ navigation }) => {
       <Picker
         selectedValue={selectedCategory}
         onValueChange={(itemCategory, itemIdx) => setSelectedCategory(itemCategory)}
+        // onValueChange={(category, index) => setSelectedCategory(category)}
       >
         {selectedLanguage === "expense"
           ? expenseCategories.map((category, index) => (
@@ -208,7 +212,8 @@ const AddScreen = ({ navigation }) => {
                 key={index} 
                 label={category.label} 
                 value={category.value} 
-                icon={<Ionicons name={category.iconName} />} 
+                icon={category.icon} 
+                // icon={<Ionicons name={category.iconName} />} 
               />
             ))
           : incomeCategories.map((category, index) => (

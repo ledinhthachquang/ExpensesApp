@@ -14,6 +14,7 @@ const CustomListItem = ({ info, navigation, id }) => {
         <ListItem onPress={() => setModalVisible(true)}>
           <View style={info.type === 'expense' ? styles.left : styles.income}>
           <FontAwesome5
+
   name={
     info.category === 'education' ? 'book' :
     info.category === 'entertainment' ? 'gamepad' :
@@ -39,6 +40,7 @@ const CustomListItem = ({ info, navigation, id }) => {
   }
   color='white'
 />
+
           </View>
           <ListItem.Content>
             <ListItem.Title

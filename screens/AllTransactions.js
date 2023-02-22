@@ -14,7 +14,7 @@ const AllTransactions = ({ navigation }) => {
   useEffect(() => {
     const unsubscribe = db
       .collection('expense')
-      .orderBy('timestamp', 'desc')
+      .orderBy('date', 'desc')
       .onSnapshot((snapshot) =>
         setTransactions(
           snapshot.docs.map((doc) => ({

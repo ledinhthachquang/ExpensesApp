@@ -79,7 +79,7 @@ const RegisterScreen = ({ navigation }) => {
   }, [navigation])
 
   const signUp = () => {
-    if (fullName && email && password && imageUrl) {
+    if (fullName && email && password ) {
       setSubmitLoading(true)
 
       auth
@@ -126,13 +126,7 @@ const RegisterScreen = ({ navigation }) => {
         Create an account
       </Text>
       <View style={styles.inputContainer}>
-        {/* <Input
-          placeholder='Full Name'
-          type='text'
-          autoFocus
-          value={fullName}
-          onChangeText={(text) => setFullName(text)}
-        /> */}
+       
         <TextInput
           style={styles.box}
           placeholder='Full Name'
@@ -149,13 +143,7 @@ const RegisterScreen = ({ navigation }) => {
           value={email}
           onChangeText={(text) => setEmail(text)}
         />
-        {/* <Input
-          placeholder='Email'
-          type='text'
-          
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-        /> */}
+       
         <TextInput
           style={styles.box}
           placeholder='Password'
@@ -165,23 +153,7 @@ const RegisterScreen = ({ navigation }) => {
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
-        {/* <Input
-          placeholder='Password'
-          type='text'
-          
-          value={password}
-          secureTextEntry
-          onChangeText={(text) => setPassword(text)}
-        /> */}
-        {/* <TextInput
-          style={styles.box}
-          placeholder='Profile Picture Url (Optional)'
-          name='text'
-          autoFocus
-          value={imageUrl}
-          onChangeText={(text) => setImageUrl(text)}
-          onSubmitEditing={signUp}
-        /> */}
+       
         <Pressable style={styles.buttonRegister} onPress={pickImage} >
           <Text style={styles.text} >Choose image for profile </Text>
           {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
@@ -194,12 +166,12 @@ const RegisterScreen = ({ navigation }) => {
       <Pressable style={styles.buttonRegister} onPress={signUp} loading={submitLoading}>
         <Text style={styles.text} >Sign up</Text>
       </Pressable>
-      <Text style={{marginTop: 8, fontSize: 12, letterSpacing: 0.25, color: 'gray', fontWeight: 'bold'}}>Or with</Text>
-      <Pressable style={styles.buttonRegister} onPress={signUp} loading={submitLoading}>
+      {/* <Text style={{marginTop: 8, fontSize: 12, letterSpacing: 0.25, color: 'gray', fontWeight: 'bold'}}>Or with</Text> */}
+      {/* <Pressable style={styles.buttonRegister} onPress={signUp} loading={submitLoading}>
         <Text style={styles.text} >
           Sign up with Google
           </Text>
-      </Pressable>
+      </Pressable> */}
       {/* {GoogleSignIn} */}
       <Button
         title="Already have an account? Login"
@@ -220,7 +192,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: '#FFF6E5',
   },
   inputContainer: {
     width: 300,
