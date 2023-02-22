@@ -14,7 +14,8 @@ const CustomListItem = ({ info, navigation, id }) => {
         <ListItem onPress={() => setModalVisible(true)}>
           <View style={info.type === 'expense' ? styles.left : styles.income}>
           <FontAwesome5
-          name={info.category === 'education' ? 'book' :
+          name={
+            info.category === 'education' ? 'book' :
             info.category === 'entertainment' ? 'gamepad' :
             info.category === 'clothing' ? 'tshirt' :
             info.category === 'food' ? 'utensils' :
@@ -23,7 +24,8 @@ const CustomListItem = ({ info, navigation, id }) => {
             info.category === 'investment' ? 'chart-line' :
             info.category === 'gift' ? 'gift' :
             info.category === 'bonus' ? 'coins' :
-            info.category === 'other'  ? 'ellipsis-h' : ''}
+            info.category === 'other'  ? 'ellipsis-h' : ''
+          }
           size={24}
           color='white'
           />
