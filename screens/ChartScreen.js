@@ -21,7 +21,7 @@ import { Ellipse, Svg } from "react-native-svg";
 import { COLORS, FONTS, SIZES, icons, images } from "../constants";
 import { set } from "date-fns";
 
-const ChartScreen = () => {
+const ChartScreen = () => { 
   // dummy data
   
   const [transactions, setTransactions] = useState([]);
@@ -31,12 +31,12 @@ const ChartScreen = () => {
       .orderBy("timestamp", "desc")
       .onSnapshot(
         (snapshot) =>
-        setTransactions(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        ) &
+          setTransactions(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+          ) &
           setTotalFood(
             snapshot.docs.map((doc) =>
               doc.data()?.email === auth.currentUser.email &&
@@ -89,7 +89,7 @@ const ChartScreen = () => {
 
     return unsubscribe;
   }, []);
- 
+
   const [filter, setFilter] = useState([]);
   useEffect(() => {
     if (transactions) {
@@ -102,7 +102,7 @@ const ChartScreen = () => {
   }, [transactions]);
 
  
-  console.log(transactions)
+  
   const [totalIncome, setTotalIncome] = useState([]);
 
   const [income, setIncome] = useState(0);
@@ -118,29 +118,28 @@ const ChartScreen = () => {
   const [totalOthers, setTotalOthers] = useState([]);
   const [others, setOthers] = useState(0);
   const [currentDate, setCurrentDate] = useState("");
-   useEffect(() => {
-     var date = new Date().getDate(); 
-     var month = new Date().getMonth() + 1; 
-     var year = new Date().getFullYear(); 
+  useEffect(() => {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
 
-     setCurrentDate(date + "/" + month + "/" + year);
-   }, []);
+    setCurrentDate(date + "/" + month + "/" + year);
+  }, []);
 
-   var days = [
-     "Sunday",
-     "Monday",
-     "Tuesday",
-     "Wednesday",
-     "Thursday",
-     "Friday",
-     "Saturday",
-   ];
-   Date.prototype.getDayName = function () {
-     return days[this.getDay()];
-   };
-   var now = new Date();
-   var today = now.getDayName();
-
+  var days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  Date.prototype.getDayName = function () {
+    return days[this.getDay()];
+  };
+  var now = new Date();
+  var today = now.getDayName();
 
   useEffect(() => {
     if (totalFood) {
@@ -201,7 +200,7 @@ const ChartScreen = () => {
     others,
     totalOthers,
     income,
-    totalIncome
+    totalIncome,
   ]);
 
   // const [totalExpenses, setTotalExpenses] = React.useState([]);
@@ -214,7 +213,7 @@ const ChartScreen = () => {
   //    { x: "education", y: education },
   //    { x: "others", y: others },
   //  ];
- 
+
   let categoriesData = [
     {
       id: 1,
@@ -253,9 +252,6 @@ const ChartScreen = () => {
     //   color: "#38ff46",
     // },
   ];
-  
-
- 
 
   const [categories, setCategories] = useState([
     {
@@ -289,7 +285,6 @@ const ChartScreen = () => {
       color: "#3e04c3",
     },
   ]);
-  
 
   const [selectedCategory, setSelectedCategory] = React.useState(null);
 
@@ -298,7 +293,7 @@ const ChartScreen = () => {
       <View
         style={{
           paddingHorizontal: SIZES.padding,
-          
+
           backgroundColor: COLORS.white,
         }}
       >
@@ -330,11 +325,9 @@ const ChartScreen = () => {
           </View>
 
           <View style={{ marginLeft: SIZES.padding }}>
-            <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>
-            {today}
-            </Text>
+            <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>{today}</Text>
             <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>
-            {currentDate}
+              {currentDate}
             </Text>
           </View>
         </View>
@@ -344,8 +337,6 @@ const ChartScreen = () => {
 
   function processCategoryDataToDisplay() {
     let chartData = categoriesData.map((item) => {
-     
-
       return {
         name: item.name,
         y: item.total,
@@ -370,8 +361,6 @@ const ChartScreen = () => {
       (a, b) => a + (b.expenseCount || 0),
       0
     );
-
-   
 
     if (Platform.OS == "ios") {
       return (
@@ -443,7 +432,7 @@ const ChartScreen = () => {
             <VictoryPie
               standalone={false} // Android workaround
               data={chartData}
-              labels={(datum) => console.log('datum')}
+              labels={(datum) => console.log("datum")}
               radius={({ datum }) =>
                 selectedCategory && selectedCategory.name == datum.name
                   ? SIZES.width * 0.4
@@ -570,6 +559,7 @@ const ChartScreen = () => {
       </View>
     );
   }
+
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.lightGray2 }}>
       {/* Nav bar section */}
@@ -589,9 +579,6 @@ const ChartScreen = () => {
     </View>
   );
 };
-
-
-
 
 export default ChartScreen;
 
