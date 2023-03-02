@@ -23,14 +23,24 @@ In Vietnam today, there is a lot of demand for personal financial management. Th
 
 ## Feature
 ### ScreenShots
-<img width="333" alt="image" src="https://user-images.githubusercontent.com/111257273/222358448-3b7a0352-943e-4aca-ac9c-4943e6ff19de.png"> <img width="333" alt="image" src="https://user-images.githubusercontent.com/111257273/222358539-e72f5861-55e7-4815-8456-e72a2e82ac5f.png">  <img width="333" alt="image" src="https://user-images.githubusercontent.com/111257273/222358091-038bb19e-b230-433e-9588-7ebbb3e30e60.png">
+<img width="333" alt="image" src="https://user-images.githubusercontent.com/111257273/222358448-3b7a0352-943e-4aca-ac9c-4943e6ff19de.png"> <img width="333" alt="image" src="https://user-images.githubusercontent.com/111257273/222358539-e72f5861-55e7-4815-8456-e72a2e82ac5f.png">  
 
+- Home Screen
 
-- Add transaction: Users can add a new transaction by specifying the date, category, amount, and description of the transaction.
-- Edit transaction: Users can edit an existing transaction by modifying its date, category, amount, or description.
-- Delete transaction: Users can delete an existing transaction by clicking on the delete button.
-- Import and Export data: Users can import and export their data to and from svg files.
+<img width="333" alt="image" src="https://user-images.githubusercontent.com/111257273/222358091-038bb19e-b230-433e-9588-7ebbb3e30e60.png"> <img width="331" alt="image" src="https://user-images.githubusercontent.com/111257273/222359112-f81bbfc5-3c5a-40ca-a5af-f07bdb9191d5.png">
+
 - Financial analysis: Users can view their expenses and income in the form of charts, which helps them analyze their financial performance.
+<img width="332" alt="image" src="https://user-images.githubusercontent.com/111257273/222359674-e8ae56ff-f378-40b5-974a-98aac90ed0ed.png">
+
+- Import and Export data: Users can import and export their data to and from csv,xml,qif files.
+
+<img width="333" alt="image" src="https://user-images.githubusercontent.com/111257273/222360132-e005ff7d-97c9-4446-ae9a-8985c5efdd4c.png"> <img width="332" alt="image" src="https://user-images.githubusercontent.com/111257273/222360554-0baddfe8-dad7-4ba0-8b85-af0b9f2a233c.png">
+
+- Search and Filter: Users can search and filter transactions by headings, dates and categories
+
+<img width="332" alt="image" src="https://user-images.githubusercontent.com/111257273/222361493-92dd1785-8d26-404a-b9e0-02ab9261602d.png"> <img width="300" alt="image" src="https://user-images.githubusercontent.com/111257273/222362454-df3123ec-efcb-4d57-adfb-05205d89f5ef.png">
+
+
 - Notifications: Users can set up notifications for upcoming transactions and receive reminders before the transaction date.
 - Schedule transactions: Users can schedule transactions to occur automatically on specific dates.
 
