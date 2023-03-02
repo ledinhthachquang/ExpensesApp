@@ -5,7 +5,7 @@
 In Vietnam today, there is a lot of demand for personal financial management. Therefore, the team decided to create an application that can support the needs of tracking personal finances. This app aims to help users track their expenses, store and categorize data by date into charts for financial analysis, and manage their personal finances efficiently.
 
 ## Detail
-- Main functions: Add, delete, edit transactions, Import, Export data to svg files. Manage data by date in the form of charts. Send notifications and schedule transactions automatically.
+- Main functions: Add, delete, edit transactions, Import, Export data to csv,xml,qif files. Manage data by date in the form of charts. Send notifications and schedule transactions automatically.Finally, search and filter fucntion help users can search and filter transactions by headings, dates and categories 
 - Total time to complete: ~50h
 - Member: Group of 3 people
 - Framework: React-native
