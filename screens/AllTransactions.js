@@ -1,20 +1,22 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomListItem from '../components/CustomListItem'
 import { db, auth } from '../firebase'
-import { Text, Icon, Button } from 'react-native-elements'
+import { Text, Icon, Button,Input } from 'react-native-elements'
 import { FontAwesome5 } from '@expo/vector-icons'
-// import FilterIcon from '../components/FilterIcon'
+// import FilterIcon from '../components/FilterIcon's
 
 const AllTransactions = ({ navigation }) => {
   const [showFilter, setShowFilter] = useState(false);
   const [transactions, setTransactions] = useState([])
   const [filter, setFilter] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
+
   useEffect(() => {
     const unsubscribe = db
       .collection('expense')
-      .orderBy('date', 'desc')
+      .orderBy('timestamp', 'desc')
       .onSnapshot((snapshot) =>
         setTransactions(
           snapshot.docs.map((doc) => ({
@@ -25,29 +27,41 @@ const AllTransactions = ({ navigation }) => {
       )
     return unsubscribe
   }, [])
-  useEffect(() => {
-    if (transactions) {
-      setFilter(
-        transactions.filter(
-          (transaction) => transaction.data.email === auth.currentUser.email
-        )
-      )
-    }
-  }, [transactions])
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'All Transactions',
       headerRight: () => (
         <Button
           type="clear"
-          // icon={<FontAwesome5 name="filter" size={23} color="#fff" />}
+          icon={<FontAwesome5 name="filter" size={23} color="#fff" />}
           onPress={() => setShowFilter(!showFilter)}
         />
       ),
     })
   }, [navigation, showFilter])
+
+  useEffect(() => {
+    setFilter(
+      transactions.filter(
+        (transaction) =>
+          transaction.data.email === auth.currentUser.email &&
+          transaction.data.text.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    )
+  }, [searchQuery, transactions])
+
   return (
     <>
+      <View style={styles.searchContainer}>
+        <Input
+          style={styles.searchInput}
+          placeholder="Search"
+          leftIcon={<Icon name="search" type="fontawesome" />}
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+        />
+      </View>
       {showFilter ? (
         <FillterIcon transactions={transactions} setFilter={setFilter} />
       ) : (
@@ -93,4 +107,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-})
+  searchContainer: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+});
+
+
