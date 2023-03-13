@@ -3,15 +3,17 @@ import { ScrollView, StyleSheet, View, TextInput } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomListItem from '../components/CustomListItem'
 import { db, auth } from '../firebase'
-import { Text, Icon, Button,Input } from 'react-native-elements'
+import { Text, Icon, Button, Input } from 'react-native-elements'
 import { FontAwesome5 } from '@expo/vector-icons'
-// import FilterIcon from '../components/FilterIcon's
+import FilterScreen from '../components/FilterScreen'
 
 const AllTransactions = ({ navigation }) => {
   const [showFilter, setShowFilter] = useState(false);
-  const [transactions, setTransactions] = useState([])
-  const [filter, setFilter] = useState([])
-  const [searchQuery, setSearchQuery] = useState('')
+  const [transactions, setTransactions] = useState([]);
+  const [filter, setFilter] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterApplied, setFilterApplied] = useState(false);
+  const [filterVisible, setFilterVisible] = useState(false);
 
   useEffect(() => {
     const unsubscribe = db
@@ -24,22 +26,36 @@ const AllTransactions = ({ navigation }) => {
             data: doc.data(),
           }))
         )
-      )
-    return unsubscribe
-  }, [])
+      );
+    return unsubscribe;
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       title: 'All Transactions',
       headerRight: () => (
-        <Button
-          type="clear"
-          icon={<FontAwesome5 name="filter" size={23} color="#fff" />}
-          onPress={() => setShowFilter(!showFilter)}
-        />
+        <>
+          {!filterApplied && (
+            <Button
+              type="clear"
+              icon={<FontAwesome5 name="filter" size={23} color="#fff" />}
+              onPress={() => setShowFilter(!showFilter)}
+            />
+          )}
+          {filterApplied && (
+            <Button
+              type="clear"
+              title="Remove Filter"
+              onPress={() => {
+                setFilterApplied(false);
+                setSearchQuery('');
+              }}
+            />
+          )}
+        </>
       ),
-    })
-  }, [navigation, showFilter])
+    });
+  }, [navigation, showFilter, filterApplied]);
 
   useEffect(() => {
     setFilter(
@@ -48,12 +64,19 @@ const AllTransactions = ({ navigation }) => {
           transaction.data.email === auth.currentUser.email &&
           transaction.data.text.toLowerCase().includes(searchQuery.toLowerCase())
       )
-    )
-  }, [searchQuery, transactions])
+    );
+  }, [searchQuery, transactions]);
+
+
+  const applyFilter = () => {
+    setFilterApplied(true);
+    setFilterVisible(false);
+  };
 
   return (
     <>
-      <View style={styles.searchContainer}>
+    <View style = {styles.Container}>
+    <View style={styles.searchContainer}>
         <Input
           style={styles.searchInput}
           placeholder="Search"
@@ -63,39 +86,40 @@ const AllTransactions = ({ navigation }) => {
         />
       </View>
       {showFilter ? (
-        <FillterIcon transactions={transactions} setFilter={setFilter} />
+        <FilterScreen visible={showFilter} setVisible={setShowFilter}  />
+      ) : filter?.length > 0 ? (
+        <SafeAreaView style={styles.container}>
+          <ScrollView>
+            {filter?.map((info) => (
+              <View key={info.id}>
+                <CustomListItem info={info.data} navigation={navigation} id={info.id} />
+              </View>
+            ))}
+          </ScrollView>
+        </SafeAreaView>
       ) : (
-        filter?.length > 0 ? (
-          <SafeAreaView style={styles.container}>
-            <ScrollView>
-              {filter?.map((info) => (
-                <View key={info.id}>
-                  <CustomListItem
-                    info={info.data}
-                    navigation={navigation}
-                    id={info.id}
-                  />
-                </View>
-              ))}
-            </ScrollView>
-          </SafeAreaView>
-        ) : (
-          <View style={styles.containerNull}>
-            <FontAwesome5 name='list-alt' size={24} color='#EF8A76' />
-            <Text h4 style={{color: '#4A2D5D'}}>
-              No Transactions
-            </Text>
-          </View>
-        )
+        <View style={styles.containerNull}>
+          <FontAwesome5 name="list-alt" size={24} color="#EF8A76" />
+          <Text h4 style={{ color: '#4A2D5D' }}>
+            No Transactions
+          </Text>
+        </View>
       )}
+    </View>
     </>
-  )
-}
+  );
+};
 
-export default AllTransactions
+export default AllTransactions;
+
+
 
 
 const styles = StyleSheet.create({
+
+  Container:{
+    backgroundColor:'red'
+  },
   container: {
     backgroundColor: 'white',
     padding: 0,
@@ -103,14 +127,14 @@ const styles = StyleSheet.create({
   },
   containerNull: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'white', // update this line
     alignItems: 'center',
     justifyContent: 'center',
   },
   searchContainer: {
+    backgroundColor:'white',
     paddingHorizontal: 10,
     paddingVertical: 5,
   },
 });
-
 

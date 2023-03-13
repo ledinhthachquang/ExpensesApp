@@ -1,4 +1,5 @@
 # ExpensesApp
+<<<<<<< Updated upstream
 - `npm install` or `yarn` to install all the dependencies, React and React Native among others.
 ## Scenario
 
@@ -52,3 +53,26 @@ Some builds from npm included bugs while `npm install`. So if you are using a np
 
 ```
 
+=======
+Project Overview:
+
+Scenario:
+In Vietnam today, there is a lot of demand for personal financial management. Therefore, the team decided to create an application that can support the needs of tracking personal finances. This app aims to help users track their expenses, store and categorize data by date into charts for financial analysis, and manage their personal finances efficiently.
+
+Detail:
+
+Main functions: Add, delete, edit transactions, Import, Export data to svg files. Manage data by date in the form of charts. Send notifications and schedule transactions automatically.
+Total time to complete: ~50h
+Member: Group of 3 people
+Framework: React-native
+Database: Firebase storage
+Feature:
+
+Add transaction: Users can add a new transaction by specifying the date, category, amount, and description of the transaction.
+Edit transaction: Users can edit an existing transaction by modifying its date, category, amount, or description.
+Delete transaction: Users can delete an existing transaction by clicking on the delete button.
+Import and Export data: Users can import and export their data to and from svg files.
+Financial analysis: Users can view their expenses and income in the form of charts, which helps them analyze their financial performance.
+Notifications: Users can set up notifications for upcoming transactions and receive reminders before the transaction date.
+Schedule transactions: Users can schedule transactions to occur automatically on specific dates.
+>>>>>>> Stashed changes
